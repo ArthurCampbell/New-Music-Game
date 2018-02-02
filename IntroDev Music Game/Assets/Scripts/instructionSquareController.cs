@@ -2,46 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class squareController : MonoBehaviour {
+public class instructionSquareController : MonoBehaviour
+{
 
     AudioSource myAudioSource;
     public AudioClip mySound;
     public SpriteRenderer mySpriteRenderer;
 
-    public int myNumber;
     public doorController doorScript;
 
     public youController youScript;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = mySound;
         mySpriteRenderer = GetComponent<SpriteRenderer>();
 
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
         youScript = GameObject.FindWithTag("Player").GetComponent<youController>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         //If our audio is playing
-        if (myAudioSource.isPlaying) {
+        if (myAudioSource.isPlaying)
+        {
             //And the player is on top of us
-            if (Vector3.Distance(youScript.transform.position, transform.position) < 0.6f) {
+            if (Vector3.Distance(youScript.transform.position, transform.position) < 0.6f)
+            {
                 //Keep playing, we're fine!
-            } else {
+            }
+            else
+            {
                 //If the player is not on top of us, stop playing so we don't get any
                 //Weird audio overlap
                 myAudioSource.Stop();
             }
-        }
-
-        //If we have just been played
-        if (doorScript.squarePlayed[myNumber]) {
-            //record we are not being played, because we only need to record we have 
-            //been played for a frame
-            doorScript.squarePlayed[myNumber] = false;
         }
 
         /*
@@ -51,7 +50,7 @@ public class squareController : MonoBehaviour {
             mySpriteRenderer.color = new Color(255, 255, 255);
         }
         */
-	}
+    }
 
     //If we run into something
     void OnCollisionEnter2D(Collision2D coll)
@@ -68,10 +67,8 @@ public class squareController : MonoBehaviour {
             {
                 //play our sound
                 myAudioSource.Play();
-
-                //Record we have been played!
-                doorScript.squarePlayed[myNumber] = true;
             }
         }
     }
 }
+

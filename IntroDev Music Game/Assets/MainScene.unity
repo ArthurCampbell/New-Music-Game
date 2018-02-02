@@ -201,65 +201,40 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4045349673364292, guid: b911042c49b954b119c7aa49befe6ec9, type: 2}
+    - target: {fileID: 4788907292861138, guid: 40a9198525d5f4db9bb531022a6b2b0d, type: 2}
       propertyPath: m_LocalPosition.x
       value: -4
       objectReference: {fileID: 0}
-    - target: {fileID: 4045349673364292, guid: b911042c49b954b119c7aa49befe6ec9, type: 2}
+    - target: {fileID: 4788907292861138, guid: 40a9198525d5f4db9bb531022a6b2b0d, type: 2}
       propertyPath: m_LocalPosition.y
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 4045349673364292, guid: b911042c49b954b119c7aa49befe6ec9, type: 2}
+    - target: {fileID: 4788907292861138, guid: 40a9198525d5f4db9bb531022a6b2b0d, type: 2}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4045349673364292, guid: b911042c49b954b119c7aa49befe6ec9, type: 2}
+    - target: {fileID: 4788907292861138, guid: 40a9198525d5f4db9bb531022a6b2b0d, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4045349673364292, guid: b911042c49b954b119c7aa49befe6ec9, type: 2}
+    - target: {fileID: 4788907292861138, guid: 40a9198525d5f4db9bb531022a6b2b0d, type: 2}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4045349673364292, guid: b911042c49b954b119c7aa49befe6ec9, type: 2}
+    - target: {fileID: 4788907292861138, guid: 40a9198525d5f4db9bb531022a6b2b0d, type: 2}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4045349673364292, guid: b911042c49b954b119c7aa49befe6ec9, type: 2}
+    - target: {fileID: 4788907292861138, guid: 40a9198525d5f4db9bb531022a6b2b0d, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4045349673364292, guid: b911042c49b954b119c7aa49befe6ec9, type: 2}
+    - target: {fileID: 4788907292861138, guid: 40a9198525d5f4db9bb531022a6b2b0d, type: 2}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 61746586260876568, guid: b911042c49b954b119c7aa49befe6ec9,
-        type: 2}
-      propertyPath: m_UsedByComposite
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212799708459204718, guid: b911042c49b954b119c7aa49befe6ec9,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.68312067
-      objectReference: {fileID: 0}
-    - target: {fileID: 212799708459204718, guid: b911042c49b954b119c7aa49befe6ec9,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.69735336
-      objectReference: {fileID: 0}
-    - target: {fileID: 212799708459204718, guid: b911042c49b954b119c7aa49befe6ec9,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.97794116
-      objectReference: {fileID: 0}
-    - target: {fileID: 114010287377147204, guid: b911042c49b954b119c7aa49befe6ec9,
-        type: 2}
-      propertyPath: mySound
-      value: 
-      objectReference: {fileID: 8300000, guid: 311196da8bb874fee8f691c5fe7a2323, type: 3}
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: b911042c49b954b119c7aa49befe6ec9, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 40a9198525d5f4db9bb531022a6b2b0d, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1541315435
 GameObject:
@@ -363,6 +338,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ab7d14c2986f84ecf9fbddf90703ac2a, type: 3}
   doorOpen: {fileID: 0}
   squarePlayed: 0000000000000000000000
+  correctSquare: 
+  correctSquarePlayed: 
+  nextSquareInCorrectOrder: 0
+  currentCorrectSquareIndex: 0
+  level1SquareOrder: 000000000700000008000000090000000600000001000000020000000300000004000000050000000a000000
   myAudioSource: {fileID: 0}
   doorOpenPlayed: 0
   mySpriteRenderer: {fileID: 0}
@@ -416,7 +396,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
