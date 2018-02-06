@@ -44,6 +44,12 @@ public class squareController : MonoBehaviour {
             doorScript.squarePlayed[myNumber] = false;
         }
 
+        //If we are going to go to the next level, we need to destory ourselves so we can 
+        //be created again in the proper place in the next level
+        if (doorScript.readyForLevelChange) {
+            Destroy(gameObject);
+        }
+
         /*
         if (doorScript.correctSquarePlayed[correctSquaremyNumber]){
             mySpriteRenderer.color = new Color(0, 255, 0);
