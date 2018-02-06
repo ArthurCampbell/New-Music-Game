@@ -180,8 +180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a1ae02eea0c42669f4b1d4181f6435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mySound: {fileID: 0}
-  myNumber: 0
+  mySound: {fileID: 8300000, guid: 9ab314cc7c4984015a454674e5e59fc5, type: 3}
+  mySpriteRenderer: {fileID: 0}
+  pressedColor: {r: 0.16176468, g: 1, b: 0.653144, a: 1}
+  myNumber: 3
   doorScript: {fileID: 0}
   youScript: {fileID: 0}
 --- !u!212 &212799708459204718

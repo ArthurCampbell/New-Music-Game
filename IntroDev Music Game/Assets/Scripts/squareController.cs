@@ -8,6 +8,8 @@ public class squareController : MonoBehaviour {
     public AudioClip mySound;
     public SpriteRenderer mySpriteRenderer;
 
+    public Color pressedColor;
+
     public int myNumber;
     public doorController doorScript;
 
@@ -50,13 +52,13 @@ public class squareController : MonoBehaviour {
             Destroy(gameObject);
         }
 
-        /*
-        if (doorScript.correctSquarePlayed[correctSquaremyNumber]){
-            mySpriteRenderer.color = new Color(0, 255, 0);
-        } else {
-            mySpriteRenderer.color = new Color(255, 255, 255);
+        Color myColor = mySpriteRenderer.color;
+        if (myColor != new Color(1, 1, 1)) {
+            myColor.r += 2f * Time.deltaTime;
+            myColor.g += 2f * Time.deltaTime;
+            myColor.b += 2f * Time.deltaTime;
         }
-        */
+        mySpriteRenderer.color = myColor;
 	}
 
     //If we run into something
@@ -77,6 +79,9 @@ public class squareController : MonoBehaviour {
 
                 //Record we have been played!
                 doorScript.squarePlayed[myNumber] = true;
+
+                //Change our color, because we have been played!
+                mySpriteRenderer.color = pressedColor;
             }
         }
     }

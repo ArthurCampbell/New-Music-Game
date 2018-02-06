@@ -13,7 +13,7 @@ public class doorController : MonoBehaviour {
     int[] correctSquare;
     public bool[] correctSquarePlayed;
     int nextSquareInCorrectOrder;
-    int currentCorrectSquareIndex;
+    public int currentCorrectSquareIndex;
 
     //HELLO HI IF YOU WANT TO EDIT THE MELODY/SOLUTION ONLY EDIT THE ARRAYS WITH LEVEL[number]
     //IN FRONT OF THEM THANK YOU
@@ -26,10 +26,13 @@ public class doorController : MonoBehaviour {
     public AudioClip level3Solution;
     public int[] level4SquareOrder;
     public AudioClip level4Solution;
+    public int[] level5SquareOrder;
+    public AudioClip level5Solution;
 
-    bool levelCompleted;
+    public bool levelCompleted;
     public int currentLevel;
     public bool readyForLevelChange;
+    public bool goodbyeSquares;
 
     public AudioSource myAudioSource;
     public bool doorOpenPlayed;
@@ -50,6 +53,9 @@ public class doorController : MonoBehaviour {
 
     public float[] Level4SquareXPosition;
     public float[] Level4SquareYPosition;
+
+    public float[] Level5SquareXPosition;
+    public float[] Level5SquareYPosition;
 
     public float timeToDoorChange;
 
@@ -88,11 +94,11 @@ public class doorController : MonoBehaviour {
                     {
                         //The next correct square is one up in the correct square index
                         currentCorrectSquareIndex++;
+
                         //Record what actual number that square is
                         nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
-                    }
-                    else
-                    {
+
+                    } else  {
                         //Otherwise, we beat the level! congrats!
                         levelCompleted = true;
                     }
@@ -126,21 +132,30 @@ public class doorController : MonoBehaviour {
                 timeToDoorChange += Time.deltaTime;
             } else {
                 //When they have, change to the door success color
-                mySpriteRenderer.color = new Color(0, 255, 0);
+                mySpriteRenderer.color = new Color(0, 1, 0);
                 //And
                 readyForLevelChange = true;
             }
         }
-
-        Debug.Log(musicBits[musicBits.Length - 2].length);
 	}
 
     private void OnCollisionEnter2D(Collision2D coll)
     {
         //If we collide with the player and we are ready for a level change
         if (coll.gameObject.tag == "Player" && readyForLevelChange){
-            //go to the next level
-            newLevel();
+            
+            //if we haven't played through all the levels
+            if (currentLevel < 5)
+            {
+                //GoodbyeSquares DOES NOT GET RID OF SQUARES YET
+                //Right now that responsibilty is handled by readyForLevelChange
+                goodbyeSquares = true;
+
+                //go to the next level
+                newLevel();
+            } else {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -158,8 +173,12 @@ public class doorController : MonoBehaviour {
         levelCompleted = false;
         //Thus we are not ready for a level change
         readyForLevelChange = false;
+        //Thus we should not get rid of the squares
+        //THIS DOES NOT ACTUALLY GET RID OF THE SQUARES AT THIS TIME
+        //THE VARIABLE THE SQUARES USE TO SEE IF THEY SHOULD DESTROY THEMSELVES IS readyForLevelChange
+        goodbyeSquares = false;
         //Reset our color
-        mySpriteRenderer.color = new Color(255, 0, 0);
+        mySpriteRenderer.color = new Color(1, 0, 0);
 
         //Grab the square controller cuz we're gonna need to reset the squares
         squareController squareScript = square.GetComponent<squareController>();
@@ -218,6 +237,17 @@ public class doorController : MonoBehaviour {
             correctSquarePlayed = new bool[level4SquareOrder.Length];
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+        } else if (currentLevel == 5)
+        {
+            instructionSquareScript.mySound = level5Solution;
+
+            squareX = Level5SquareXPosition;
+            squareY = Level5SquareYPosition;
+
+            correctSquare = level5SquareOrder;
+            correctSquarePlayed = new bool[level5SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
         }
 
 
@@ -230,13 +260,13 @@ public class doorController : MonoBehaviour {
         }
 
         //move the player back to the start
-        Vector3 pos = new Vector3(-5f, 1f, -.15f);
+        Vector3 pos = new Vector3(-6f, 1f, -.15f);
         //The z is -.15 so they're in front of everything
         youScript.transform.position = pos;
 
 
         //Make the instruction square
-        Instantiate(instructionSquare, new Vector3(-4f, 1f, 0f), Quaternion.identity);
+        Instantiate(instructionSquare, new Vector3(-5f, 1f, 0f), Quaternion.identity);
 
 
     }

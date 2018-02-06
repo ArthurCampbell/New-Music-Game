@@ -16,8 +16,9 @@ public class youController : MonoBehaviour {
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
 
         Vector3 pos = transform.position;
-        pos.x = doorScript.squareX[0] - 4f;
-        pos.y = doorScript.squareY[0];
+        //We start one to the left of the instruction square
+        pos.x = -6f;
+        pos.y = 1f;
         //currentSquarePos = 0;
         transform.position = pos;
 	}
@@ -26,25 +27,21 @@ public class youController : MonoBehaviour {
 	void Update () {
         Vector3 pos = transform.position;
 
-        if (Input.GetKeyDown(KeyCode.A)) {
-            //transform.position += new Vector3(-1f, 0f, 0f) * Time.deltaTime * speed;
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
             pos.x -= 1f;
             facingLeft = true;
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            //transform.position += new Vector3(1f, 0f, 0f) * Time.deltaTime * speed;
             pos.x += 1f;
             facingLeft = false;
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            //transform.position += new Vector3(0f, 1f, 0f) * Time.deltaTime * speed;
             pos.y += 1f;
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            //transform.position += new Vector3(0f, -1f, 0f) * Time.deltaTime * speed;
             pos.y -= 1f;
         }
 
