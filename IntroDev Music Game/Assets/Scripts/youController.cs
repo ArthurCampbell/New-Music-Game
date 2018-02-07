@@ -50,10 +50,10 @@ public class youController : MonoBehaviour {
         SpriteRenderer meSprite = GetComponent<SpriteRenderer>();
 
         if (facingLeft){
-            meSprite.flipX = true;
+            //meSprite.flipX = true;
     
         } else {
-            meSprite.flipX = false;
+            //meSprite.flipX = false;
         }
 	}
 }
