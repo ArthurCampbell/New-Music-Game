@@ -9,13 +9,16 @@ public class drumstickController : MonoBehaviour {
     GameObject me;
 
     public AudioClip mySound;
-
+    AudioSource myAudioSource;
 
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<youController>();
         me = gameObject;
+
+        myAudioSource = GetComponent<AudioSource>();
+        myAudioSource.clip = mySound;
 	}
 	
 	// Update is called once per frame
@@ -67,7 +70,7 @@ public class drumstickController : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag == "Square") {
-            
+            myAudioSource.Play();
         }
     }
 }
