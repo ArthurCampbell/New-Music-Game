@@ -54,9 +54,17 @@ public class squareController : MonoBehaviour {
 
         Color myColor = mySpriteRenderer.color;
         if (myColor != new Color(1, 1, 1)) {
-            myColor.r += 2f * Time.deltaTime;
-            myColor.g += 2f * Time.deltaTime;
-            myColor.b += 2f * Time.deltaTime;
+            if (myColor.r < 1f) {
+                myColor.r += (1 - myColor.r) * Time.deltaTime * 2;
+            }
+            if (myColor.g < 1f)
+            {
+                myColor.g += (1 - myColor.g) * Time.deltaTime * 2;
+            }
+            if (myColor.b < 1f)
+            {
+                myColor.b += (1 - myColor.b) * Time.deltaTime * 2;
+            }
         }
         mySpriteRenderer.color = myColor;
 	}
