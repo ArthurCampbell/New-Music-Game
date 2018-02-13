@@ -45,7 +45,7 @@ public class instructionSquareController : MonoBehaviour
 
         //If we are going to go to the next level, we need to destory ourselves so we can 
         //be created again with the proper sound in the next level
-        if (doorScript.readyForLevelChange)
+        if (doorScript.goodbyeSquares)
         {
             Destroy(gameObject);
         }

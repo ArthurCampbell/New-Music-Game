@@ -48,7 +48,8 @@ public class squareController : MonoBehaviour {
 
         //If we are going to go to the next level, we need to destory ourselves so we can 
         //be created again in the proper place in the next level
-        if (doorScript.readyForLevelChange) {
+        if (doorScript.goodbyeSquares) {
+            doorScript.squaresDestroyed++;
             Destroy(gameObject);
         }
 

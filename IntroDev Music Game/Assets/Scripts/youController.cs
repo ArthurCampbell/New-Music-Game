@@ -5,7 +5,7 @@ using UnityEngine;
 public class youController : MonoBehaviour {
 
     public float speed;
-    bool facingLeft;
+    //bool facingLeft;
 
     public bool canSwitchCharacters;
 
@@ -41,14 +41,14 @@ public class youController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
             pos.x -= 1f;
-            facingLeft = true;
+            //facingLeft = true;
 
             switchCharacters();
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             pos.x += 1f;
-            facingLeft = false;
+            //facingLeft = false;
 
             switchCharacters();
         }
@@ -77,14 +77,16 @@ public class youController : MonoBehaviour {
         transform.position = pos;
         drumstick.transform.localPosition = pos; 
 
-        SpriteRenderer meSprite = GetComponent<SpriteRenderer>();
+        //SpriteRenderer meSprite = GetComponent<SpriteRenderer>();
 
+        /*
         if (facingLeft){
             //meSprite.flipX = true;
     
         } else {
             //meSprite.flipX = false;
         }
+        */
 	}
 
     void switchCharacters() {

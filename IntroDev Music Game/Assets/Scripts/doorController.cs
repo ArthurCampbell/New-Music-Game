@@ -33,6 +33,8 @@ public class doorController : MonoBehaviour {
     public int currentLevel;
     public bool readyForLevelChange;
     public bool goodbyeSquares;
+    public bool timeForLevelChange;
+    public int squaresDestroyed;
 
     public AudioSource myAudioSource;
     public bool doorOpenPlayed;
@@ -137,6 +139,16 @@ public class doorController : MonoBehaviour {
                 readyForLevelChange = true;
             }
         }
+
+        if (timeForLevelChange) {
+            if (goodbyeSquares == false){
+                goodbyeSquares = true;
+            } else {
+                if (squaresDestroyed >= squarePlayed.Length) {
+                    newLevel();
+                }
+            }
+        }
 	}
 
     private void OnCollisionEnter2D(Collision2D coll)
@@ -147,19 +159,14 @@ public class doorController : MonoBehaviour {
             //if we haven't played through all the levels
             if (currentLevel < 5)
             {
-                //GoodbyeSquares DOES NOT GET RID OF SQUARES YET
-                //Right now that responsibilty is handled by readyForLevelChange
-                goodbyeSquares = true;
-
-                //go to the next level
-                newLevel();
+                timeForLevelChange = true;
             } else {
                 Destroy(gameObject);
             }
         }
     }
 
-    void newLevel()
+    public void newLevel()
     //Do this every time we go to a new level
     {
         //go up a level!
@@ -174,9 +181,9 @@ public class doorController : MonoBehaviour {
         //Thus we are not ready for a level change
         readyForLevelChange = false;
         //Thus we should not get rid of the squares
-        //THIS DOES NOT ACTUALLY GET RID OF THE SQUARES AT THIS TIME
-        //THE VARIABLE THE SQUARES USE TO SEE IF THEY SHOULD DESTROY THEMSELVES IS readyForLevelChange
         goodbyeSquares = false;
+        squaresDestroyed = 0;
+        timeForLevelChange = false;
         //Reset our color
         mySpriteRenderer.color = new Color(1, 0, 0);
 
@@ -207,6 +214,9 @@ public class doorController : MonoBehaviour {
             //Start us off at the first square
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+            //Make each square have a bool to turn on/off if they get played
+            //(we can also use this to check how many squares there are currently
+            squarePlayed = new bool[Level1SquareXPosition.Length];
         } else if (currentLevel == 2){
             instructionSquareScript.mySound = level2Solution;
 
@@ -217,6 +227,8 @@ public class doorController : MonoBehaviour {
             correctSquarePlayed = new bool[level2SquareOrder.Length];
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[Level2SquareXPosition.Length];
         } else if (currentLevel == 3){
             instructionSquareScript.mySound = level3Solution;
 
@@ -227,6 +239,8 @@ public class doorController : MonoBehaviour {
             correctSquarePlayed = new bool[level3SquareOrder.Length];
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[Level3SquareXPosition.Length];
         } else if (currentLevel == 4){
             instructionSquareScript.mySound = level4Solution;
 
@@ -237,6 +251,8 @@ public class doorController : MonoBehaviour {
             correctSquarePlayed = new bool[level4SquareOrder.Length];
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[Level4SquareXPosition.Length];
         } else if (currentLevel == 5)
         {
             instructionSquareScript.mySound = level5Solution;
@@ -248,6 +264,8 @@ public class doorController : MonoBehaviour {
             correctSquarePlayed = new bool[level5SquareOrder.Length];
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[Level5SquareXPosition.Length];
         }
 
 
