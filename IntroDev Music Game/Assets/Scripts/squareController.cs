@@ -7,6 +7,7 @@ public class squareController : MonoBehaviour {
     AudioSource myAudioSource;
     public AudioClip mySound;
     public SpriteRenderer mySpriteRenderer;
+    public TextMesh myTextMesh;
 
     public Color pressedColor;
 
@@ -20,9 +21,14 @@ public class squareController : MonoBehaviour {
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = mySound;
         mySpriteRenderer = GetComponent<SpriteRenderer>();
+        myTextMesh = GetComponentInChildren<TextMesh>();
 
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
         youScript = GameObject.FindWithTag("Player").GetComponent<youController>();
+
+        int myDisplayNumber = myNumber + 1;
+
+        myTextMesh.text = myDisplayNumber + "";
 	}
 	
 	// Update is called once per frame

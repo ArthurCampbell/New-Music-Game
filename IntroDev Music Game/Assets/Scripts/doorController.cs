@@ -20,14 +20,48 @@ public class doorController : MonoBehaviour {
     //this is because we set all other arrays based on this one so things could get confusing otherwise
     public int[] level1SquareOrder;
     public AudioClip level1Solution;
+
     public int[] level2SquareOrder;
     public AudioClip level2Solution;
+
     public int[] level3SquareOrder;
     public AudioClip level3Solution;
+
     public int[] level4SquareOrder;
     public AudioClip level4Solution;
+
     public int[] level5SquareOrder;
     public AudioClip level5Solution;
+
+    public int[] level6SquareOrder;
+    public AudioClip level6Solution;
+
+    public int[] level7SquareOrder;
+    public AudioClip level7Solution;
+
+    public int[] level8SquareOrder;
+    public AudioClip level8Solution;
+
+    public int[] level9SquareOrder;
+    public AudioClip level9Solution;
+
+    public int[] level10SquareOrder;
+    public AudioClip level10Solution;
+
+    public int[] level11SquareOrder;
+    public AudioClip level11Solution;
+
+    public int[] level12SquareOrder;
+    public AudioClip level12Solution;
+
+    public int[] level13SquareOrder;
+    public AudioClip level13Solution;
+
+    public int[] level14SquareOrder;
+    public AudioClip level14Solution;
+
+    public int[] level15SquareOrder;
+    public AudioClip level15Solution;
 
     public bool levelCompleted;
     public int currentLevel;
@@ -58,6 +92,15 @@ public class doorController : MonoBehaviour {
 
     public float[] Level5SquareXPosition;
     public float[] Level5SquareYPosition;
+
+    public float[] squareXPositionSmall;
+    public float[] squareYPositionSmall;
+
+    public float[] squareXPositionMedium;
+    public float[] squareYPositionMedium;
+
+    public float[] squareXPositionBig;
+    public float[] squareYPositionBig;
 
     public float timeToDoorChange;
 
@@ -157,7 +200,7 @@ public class doorController : MonoBehaviour {
         if (coll.gameObject.tag == "Player" && readyForLevelChange){
             
             //if we haven't played through all the levels
-            if (currentLevel < 5)
+            if (currentLevel < 15)
             {
                 timeForLevelChange = true;
             } else {
@@ -203,8 +246,8 @@ public class doorController : MonoBehaviour {
             instructionSquareScript.mySound = level1Solution;
 
             //Set the square's position arrays to that of the correct level
-            squareX = Level1SquareXPosition;
-            squareY = Level1SquareYPosition;
+            squareX = squareXPositionSmall;
+            squareY = squareYPositionSmall;
 
             //Make sure our correct squarae order is set to the correct level
             correctSquare = level1SquareOrder;
@@ -216,56 +259,186 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
             //Make each square have a bool to turn on/off if they get played
             //(we can also use this to check how many squares there are currently
-            squarePlayed = new bool[Level1SquareXPosition.Length];
+            squarePlayed = new bool[squareXPositionSmall.Length];
         } else if (currentLevel == 2){
             instructionSquareScript.mySound = level2Solution;
 
-            squareX = Level2SquareXPosition;
-            squareY = Level2SquareYPosition;
+            squareX = squareXPositionSmall;
+            squareY = squareYPositionSmall;
 
             correctSquare = level2SquareOrder;
             correctSquarePlayed = new bool[level2SquareOrder.Length];
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
-            squarePlayed = new bool[Level2SquareXPosition.Length];
+            squarePlayed = new bool[squareXPositionSmall.Length];
         } else if (currentLevel == 3){
             instructionSquareScript.mySound = level3Solution;
 
-            squareX = Level3SquareXPosition;
-            squareY = Level3SquareYPosition;
+            squareX = squareXPositionMedium;
+            squareY = squareYPositionMedium;
 
             correctSquare = level3SquareOrder;
             correctSquarePlayed = new bool[level3SquareOrder.Length];
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
-            squarePlayed = new bool[Level3SquareXPosition.Length];
+            squarePlayed = new bool[squareXPositionMedium.Length];
         } else if (currentLevel == 4){
             instructionSquareScript.mySound = level4Solution;
 
-            squareX = Level4SquareXPosition;
-            squareY = Level4SquareYPosition;
+            squareX = squareXPositionMedium;
+            squareY = squareYPositionMedium;
 
             correctSquare = level4SquareOrder;
             correctSquarePlayed = new bool[level4SquareOrder.Length];
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
-            squarePlayed = new bool[Level4SquareXPosition.Length];
+            squarePlayed = new bool[squareXPositionMedium.Length];
         } else if (currentLevel == 5)
         {
             instructionSquareScript.mySound = level5Solution;
 
-            squareX = Level5SquareXPosition;
-            squareY = Level5SquareYPosition;
+            squareX = squareXPositionMedium;
+            squareY = squareYPositionMedium;
 
             correctSquare = level5SquareOrder;
             correctSquarePlayed = new bool[level5SquareOrder.Length];
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
-            squarePlayed = new bool[Level5SquareXPosition.Length];
+            squarePlayed = new bool[squareXPositionMedium.Length];
+        } else if (currentLevel == 6)
+        {
+            instructionSquareScript.mySound = level6Solution;
+
+            squareX = squareXPositionMedium;
+            squareY = squareYPositionMedium;
+
+            correctSquare = level6SquareOrder;
+            correctSquarePlayed = new bool[level6SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionMedium.Length];
+        } else if (currentLevel == 7)
+        {
+            instructionSquareScript.mySound = level7Solution;
+
+            squareX = squareXPositionMedium;
+            squareY = squareYPositionMedium;
+
+            correctSquare = level7SquareOrder;
+            correctSquarePlayed = new bool[level7SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionMedium.Length];
+        } else if (currentLevel == 8)
+        {
+            instructionSquareScript.mySound = level8Solution;
+
+            squareX = squareXPositionBig;
+            squareY = squareYPositionBig;
+
+            correctSquare = level8SquareOrder;
+            correctSquarePlayed = new bool[level8SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionBig.Length];
+        } else if (currentLevel == 9)
+        {
+            instructionSquareScript.mySound = level9Solution;
+
+            squareX = squareXPositionBig;
+            squareY = squareYPositionBig;
+
+            correctSquare = level9SquareOrder;
+            correctSquarePlayed = new bool[level9SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionBig.Length];
+        } else if (currentLevel == 10)
+        {
+            instructionSquareScript.mySound = level10Solution;
+
+            squareX = squareXPositionBig;
+            squareY = squareYPositionBig;
+
+            correctSquare = level10SquareOrder;
+            correctSquarePlayed = new bool[level10SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionBig.Length];
+        } else if (currentLevel == 11)
+        {
+            instructionSquareScript.mySound = level11Solution;
+
+            squareX = squareXPositionBig;
+            squareY = squareYPositionBig;
+
+            correctSquare = level11SquareOrder;
+            correctSquarePlayed = new bool[level11SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionBig.Length];
+        } else if (currentLevel == 12)
+        {
+            instructionSquareScript.mySound = level12Solution;
+
+            squareX = squareXPositionBig;
+            squareY = squareYPositionBig;
+
+            correctSquare = level12SquareOrder;
+            correctSquarePlayed = new bool[level12SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionBig.Length];
+        } else if (currentLevel == 13)
+        {
+            instructionSquareScript.mySound = level13Solution;
+
+            squareX = squareXPositionBig;
+            squareY = squareYPositionBig;
+
+            correctSquare = level13SquareOrder;
+            correctSquarePlayed = new bool[level13SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionBig.Length];
+        } else if (currentLevel == 14)
+        {
+            instructionSquareScript.mySound = level14Solution;
+
+            squareX = squareXPositionBig;
+            squareY = squareYPositionBig;
+
+            correctSquare = level14SquareOrder;
+            correctSquarePlayed = new bool[level14SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionBig.Length];
+        } else if (currentLevel == 15)
+        {
+            instructionSquareScript.mySound = level15Solution;
+
+            squareX = squareXPositionBig;
+            squareY = squareYPositionBig;
+
+            correctSquare = level15SquareOrder;
+            correctSquarePlayed = new bool[level15SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionBig.Length];
         }
 
 

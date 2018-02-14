@@ -9,6 +9,7 @@ public class levelSelectMachineController : MonoBehaviour {
     doorController doorScript;
 
     public float levelSelectSquareX;
+    public float levelSelectSquareY;
     public float levelSelectSquareXStart;
 
     public bool levelSelectSquaresMade;
@@ -20,6 +21,7 @@ public class levelSelectMachineController : MonoBehaviour {
 
         levelSelectSquareXStart = -6f;
         levelSelectSquareX = levelSelectSquareXStart;
+        levelSelectSquareY = 5;
 
         levelSelectSquaresMade = false;
 	}
@@ -28,13 +30,17 @@ public class levelSelectMachineController : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.L) && levelSelectSquaresMade == false){
             //For Each Level
-            for (int x = 1; x < 6; x++) {
+            for (int x = 1; x <= 15; x++) {
                 //assign it to a level select square
                 levelSelectScript.myLevel = x;
                 //Spawn a level select square
-                Instantiate(levelSelectSquare, new Vector3(levelSelectSquareX, 5f, 0f), Quaternion.identity);
+                Instantiate(levelSelectSquare, new Vector3(levelSelectSquareX, levelSelectSquareY, 0f), Quaternion.identity);
                 Debug.Log(levelSelectSquareX);
                 levelSelectSquareX++;
+                if (levelSelectSquareX > 6) {
+                    levelSelectSquareY--;
+                    levelSelectSquareX = -6;
+                }
             }
 
             levelSelectSquaresMade = true;

@@ -437,6 +437,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelSelectSquare: {fileID: 1985200166285938, guid: d919d11b065714f78995d4f744e8ff9c,
     type: 2}
+  levelSelectSquareX: 0
+  levelSelectSquareY: 0
+  levelSelectSquareXStart: 0
   levelSelectSquaresMade: 0
 --- !u!4 &1071602383
 Transform:
@@ -560,19 +563,41 @@ MonoBehaviour:
   correctSquarePlayed: 
   currentCorrectSquareIndex: 0
   level1SquareOrder: 00000000010000000200000003000000
-  level1Solution: {fileID: 8300000, guid: c15ef1e14d33d476fb10cf1a48d0a642, type: 3}
-  level2SquareOrder: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
-  level2Solution: {fileID: 8300000, guid: da190a2231c9340bb9475892a5108d78, type: 3}
-  level3SquareOrder: 000000000700000008000000090000000600000001000000020000000300000004000000050000000a000000
-  level3Solution: {fileID: 8300000, guid: 786d39db3c2e8444ca290c6cd23289a1, type: 3}
-  level4SquareOrder: 000000000100000002000000010000000600000005000000060000000700000000000000
-  level4Solution: {fileID: 8300000, guid: d0f72a670011f493a8fd55b20ce86717, type: 3}
-  level5SquareOrder: 0a000000090000000800000009000000070000000600000005000000
-  level5Solution: {fileID: 8300000, guid: 7bf69e47c3f074ebdbf519d9d4652cdf, type: 3}
+  level1Solution: {fileID: 8300000, guid: f9640ce1d54c2494c9534db07ebb98f1, type: 3}
+  level2SquareOrder: 03000000020000000100000000000000
+  level2Solution: {fileID: 8300000, guid: cebedaafec69346cca5a70cd3086dec2, type: 3}
+  level3SquareOrder: 07000000060000000500000004000000
+  level3Solution: {fileID: 8300000, guid: d8124bae415494c4bb6cf6f78e977662, type: 3}
+  level4SquareOrder: 06000000050000000400000003000000
+  level4Solution: {fileID: 8300000, guid: f762187f6583b475da6e0cf0749472f0, type: 3}
+  level5SquareOrder: 0400000003000000020000000100000000000000
+  level5Solution: {fileID: 8300000, guid: 733558306d6cd452b9eccb2825bbd929, type: 3}
+  level6SquareOrder: 060000000700000006000000050000000400000005000000
+  level6Solution: {fileID: 8300000, guid: 6c15cd2d168d14b61849b091cc4875bc, type: 3}
+  level7SquareOrder: 0000000001000000020000000300000004000000050000000600000007000000
+  level7Solution: {fileID: 8300000, guid: b1f67a063f12646ef881cc6e56e7d22f, type: 3}
+  level8SquareOrder: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+  level8Solution: {fileID: 8300000, guid: ee5d38a843394443cbb48fc39a56908d, type: 3}
+  level9SquareOrder: 00000000010000000200000001000000060000000700000000000000
+  level9Solution: {fileID: 8300000, guid: 178637d536d50497ca8d26e3e28c2e09, type: 3}
+  level10SquareOrder: 0a000000090000000800000009000000070000000600000005000000
+  level10Solution: {fileID: 8300000, guid: 93020a12da2de468da3e28e4d26ed1b7, type: 3}
+  level11SquareOrder: 0400000005000000060000000700000000000000070000000800000009000000
+  level11Solution: {fileID: 8300000, guid: 7e275288194a44ce9805f925ac780dbb, type: 3}
+  level12SquareOrder: 000000000700000008000000090000000600000001000000020000000300000004000000050000000a000000
+  level12Solution: {fileID: 8300000, guid: b456accadf40c43e4a893c717a88ad55, type: 3}
+  level13SquareOrder: 
+  level13Solution: {fileID: 0}
+  level14SquareOrder: 
+  level14Solution: {fileID: 0}
+  level15SquareOrder: 
+  level15Solution: {fileID: 0}
   levelCompleted: 0
   currentLevel: 0
   readyForLevelChange: 0
   goodbyeSquares: 0
+  timeForLevelChange: 0
+  squaresDestroyed: 0
   myAudioSource: {fileID: 0}
   doorOpenPlayed: 0
   mySpriteRenderer: {fileID: 0}
@@ -695,6 +720,58 @@ MonoBehaviour:
   - 0
   - 1
   Level5SquareYPosition:
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0
+  - 0
+  - 0
+  squareXPositionSmall:
+  - -1
+  - 0
+  - 1
+  - 2
+  squareYPositionSmall:
+  - 2
+  - 2
+  - 2
+  - 2
+  squareXPositionMedium:
+  - -1
+  - 0
+  - 1
+  - 2
+  - 2
+  - 1
+  - 0
+  - -1
+  squareYPositionMedium:
+  - 2
+  - 2
+  - 2
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
+  squareXPositionBig:
+  - -1
+  - 0
+  - 1
+  - 2
+  - 2
+  - 1
+  - 0
+  - -1
+  - -1
+  - 0
+  - 1
+  squareYPositionBig:
   - 2
   - 2
   - 2
