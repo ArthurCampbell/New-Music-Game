@@ -35,7 +35,7 @@ public class levelSelectMachineController : MonoBehaviour {
                 levelSelectScript.myLevel = x;
                 //Spawn a level select square
                 Instantiate(levelSelectSquare, new Vector3(levelSelectSquareX, levelSelectSquareY, 0f), Quaternion.identity);
-                Debug.Log(levelSelectSquareX);
+
                 levelSelectSquareX++;
                 if (levelSelectSquareX > 6) {
                     levelSelectSquareY--;

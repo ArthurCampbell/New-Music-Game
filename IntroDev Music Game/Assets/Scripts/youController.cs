@@ -74,19 +74,13 @@ public class youController : MonoBehaviour {
             canSwitchCharacters = !canSwitchCharacters;
         }
 
+        if (doorScript.currentLevel > 12) {
+            canSwitchCharacters = true;
+        }
+
         transform.position = pos;
         drumstick.transform.localPosition = pos; 
 
-        //SpriteRenderer meSprite = GetComponent<SpriteRenderer>();
-
-        /*
-        if (facingLeft){
-            //meSprite.flipX = true;
-    
-        } else {
-            //meSprite.flipX = false;
-        }
-        */
 	}
 
     void switchCharacters() {

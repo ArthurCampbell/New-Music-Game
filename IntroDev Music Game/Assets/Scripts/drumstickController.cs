@@ -72,5 +72,15 @@ public class drumstickController : MonoBehaviour {
         if (coll.gameObject.tag == "Square") {
             myAudioSource.Play();
         }
+
+        if (coll.gameObject.tag == "Level Selector") {
+            player.SetActive(!player.activeSelf);
+            me.SetActive(!me.activeSelf);
+        }
+
+        if (coll.gameObject.tag == "Door") {
+            player.SetActive(!player.activeSelf);
+            me.SetActive(!me.activeSelf);
+        }
     }
 }

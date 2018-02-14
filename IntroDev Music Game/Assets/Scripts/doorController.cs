@@ -198,14 +198,21 @@ public class doorController : MonoBehaviour {
     {
         //If we collide with the player and we are ready for a level change
         if (coll.gameObject.tag == "Player" && readyForLevelChange){
-            
+
             //if we haven't played through all the levels
             if (currentLevel < 15)
             {
+                //Prepare to change to the next level
                 timeForLevelChange = true;
-            } else {
-                Destroy(gameObject);
             }
+            //otherwise
+            else
+            {
+                //start over
+                currentLevel = 0;
+
+            }
+
         }
     }
 
@@ -450,15 +457,30 @@ public class doorController : MonoBehaviour {
             Instantiate(square, new Vector3(squareX[x], squareY[x], 0f), Quaternion.identity);
         }
 
-        //move the player back to the start
-        Vector3 pos = new Vector3(-6f, 1f, -.15f);
+        Vector3 pos = new Vector3();
+
+
+        if (currentLevel < 13) {
+            //move the player back to the start
+            pos = new Vector3(-6f, 1f, -.15f);
+        } else if (currentLevel < 15){
+            //move the player back to the start
+            pos = new Vector3(-7f, 1f, -.15f);
+        } else {
+            //move the player back to the start
+            pos = new Vector3(-6f, 1f, -.15f);
+        }
+
         //The z is -.15 so they're in front of everything
         youScript.transform.position = pos;
 
 
         //Make the instruction square
-        Instantiate(instructionSquare, new Vector3(-5f, 1f, 0f), Quaternion.identity);
-
+        if (currentLevel < 15) {
+            Instantiate(instructionSquare, new Vector3(-5f, 1f, 0f), Quaternion.identity);
+        } else {
+            Instantiate(instructionSquare, new Vector3(-4f, 1f, 0f), Quaternion.identity);
+        }
 
     }
 }

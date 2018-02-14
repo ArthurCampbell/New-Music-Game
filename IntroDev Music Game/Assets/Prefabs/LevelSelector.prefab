@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 50806828204301634}
   m_Layer: 0
   m_Name: LevelSelector
-  m_TagString: Untagged
+  m_TagString: Level Selector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39e4950bc63f040858defea176f4758e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myLevel: 5
+  myLevel: 15
   myLevelNumber: {fileID: 102263463458568506}
 --- !u!212 &212727779031097688
 SpriteRenderer:

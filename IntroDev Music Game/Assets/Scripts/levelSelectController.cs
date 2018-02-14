@@ -18,7 +18,6 @@ public class levelSelectController : MonoBehaviour {
 
         levelSelectMachineScript = GameObject.Find("LevelSelectMachine").GetComponent<levelSelectMachineController>();
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
-        //Instantiate(myLevelNumber, new Vector3(0f, 0f, 0f), Quaternion.identity);
 	}
 	
 	// Update is called once per frame
@@ -28,6 +27,7 @@ public class levelSelectController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.L)) {
             levelSelectMachineScript.levelSelectSquaresMade = false;
             levelSelectMachineScript.levelSelectSquareX = levelSelectMachineScript.levelSelectSquareXStart;
+            levelSelectMachineScript.levelSelectSquareY = 5;
             Destroy(gameObject);
         }
 
@@ -35,7 +35,8 @@ public class levelSelectController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.tag == "Player" || coll.gameObject.tag == "Drumstick"){
+        if (coll.gameObject.tag == "Player"){
+
             if (myLevel != doorScript.currentLevel) {
                 doorScript.currentLevel = myLevel - 1;
                 doorScript.timeForLevelChange = true;

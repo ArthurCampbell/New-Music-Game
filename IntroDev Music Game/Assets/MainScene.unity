@@ -257,7 +257,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -586,12 +586,12 @@ MonoBehaviour:
   level11Solution: {fileID: 8300000, guid: 7e275288194a44ce9805f925ac780dbb, type: 3}
   level12SquareOrder: 000000000700000008000000090000000600000001000000020000000300000004000000050000000a000000
   level12Solution: {fileID: 8300000, guid: b456accadf40c43e4a893c717a88ad55, type: 3}
-  level13SquareOrder: 
-  level13Solution: {fileID: 0}
-  level14SquareOrder: 
-  level14Solution: {fileID: 0}
-  level15SquareOrder: 
-  level15Solution: {fileID: 0}
+  level13SquareOrder: 070000000500000003000000
+  level13Solution: {fileID: 8300000, guid: 00fa7f3157be1459aa845076201fa8c7, type: 3}
+  level14SquareOrder: 0100000003000000050000000900000007000000
+  level14Solution: {fileID: 8300000, guid: 30bca49b6a5c345eab032724f131660b, type: 3}
+  level15SquareOrder: 0000000002000000060000000400000006000000080000000a000000
+  level15Solution: {fileID: 8300000, guid: 12a50685103a74ee9a8def438794c28a, type: 3}
   levelCompleted: 0
   currentLevel: 0
   readyForLevelChange: 0
