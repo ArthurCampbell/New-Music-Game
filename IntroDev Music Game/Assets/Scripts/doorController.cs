@@ -4,16 +4,35 @@ using UnityEngine;
 
 public class doorController : MonoBehaviour {
 
+    public AudioSource myAudioSource;
+    public bool doorOpenPlayed;
+
+    public SpriteRenderer mySpriteRenderer;
+
+    TextMesh myTextMesh;
+    
     public Transform square;
     public Transform instructionSquare;
+    public GameObject smallDoor;
+    public smallDoorController smallDoorScript;
     public AudioClip[] musicBits;
     public AudioClip doorOpen;
+
+    public int numberOfSmallDoors;
 
     public bool[] squarePlayed;
     int[] correctSquare;
     public bool[] correctSquarePlayed;
-    int nextSquareInCorrectOrder;
+    public int nextSquareInCorrectOrder;
     public int currentCorrectSquareIndex;
+
+    public bool levelCompleted;
+    public int currentLevel;
+    public bool readyForLevelChange;
+    public bool goodbyeSquares;
+    public bool timeForLevelChange;
+    public int squaresDestroyed;
+    public float timeToDoorChange;
 
     //HELLO HI IF YOU WANT TO EDIT THE MELODY/SOLUTION ONLY EDIT THE ARRAYS WITH LEVEL[number]
     //IN FRONT OF THEM THANK YOU
@@ -63,17 +82,11 @@ public class doorController : MonoBehaviour {
     public int[] level15SquareOrder;
     public AudioClip level15Solution;
 
-    public bool levelCompleted;
-    public int currentLevel;
-    public bool readyForLevelChange;
-    public bool goodbyeSquares;
-    public bool timeForLevelChange;
-    public int squaresDestroyed;
+    public int[] level16SquareOrder;
+    public AudioClip level16Solution;
 
-    public AudioSource myAudioSource;
-    public bool doorOpenPlayed;
-
-    public SpriteRenderer mySpriteRenderer;
+    public int[] level17SquareOrder;
+    public AudioClip level17Solution;
 
     public float[] squareX;
     public float[] squareY;
@@ -102,13 +115,10 @@ public class doorController : MonoBehaviour {
     public float[] squareXPositionBig;
     public float[] squareYPositionBig;
 
-    public float timeToDoorChange;
-
 	// Use this for initialization
     void Start () {
         //We start on the first level,
-        //newLevel() increments the level count
-        currentLevel = 0;
+        currentLevel = 1;
 
         doorOpen = musicBits[musicBits.Length - 1];
         myAudioSource = GetComponent<AudioSource>();
@@ -117,11 +127,18 @@ public class doorController : MonoBehaviour {
 
         mySpriteRenderer = GetComponent<SpriteRenderer>();
 
+        myTextMesh = GetComponentInChildren<TextMesh>();
+
+        smallDoorScript = smallDoor.GetComponent<smallDoorController>();
+
         newLevel();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        //Label us with the current level
+        myTextMesh.text = currentLevel + "";
 
         //ARE WE PLAYING THE SQUARES IN ORDER????
 
@@ -187,7 +204,7 @@ public class doorController : MonoBehaviour {
             if (goodbyeSquares == false){
                 goodbyeSquares = true;
             } else {
-                if (squaresDestroyed >= squarePlayed.Length) {
+                if (squaresDestroyed >= squarePlayed.Length && numberOfSmallDoors <= 0) {
                     newLevel();
                 }
             }
@@ -198,29 +215,52 @@ public class doorController : MonoBehaviour {
     {
         //If we collide with the player and we are ready for a level change
         if (coll.gameObject.tag == "Player" && readyForLevelChange){
-
-            //if we haven't played through all the levels
-            if (currentLevel < 15)
-            {
-                //Prepare to change to the next level
-                timeForLevelChange = true;
-            }
-            //otherwise
-            else
-            {
+         
+            //If we're at level 15
+            if (currentLevel == 16) {
                 //start over
                 currentLevel = 0;
-
+            } else {
+                currentLevel++;
             }
 
+        //Prepare to change to the next level
+        timeForLevelChange = true;
+
         }
+    }
+
+    public void makeSmallDoor(int levelToGoTo, int[] squareOrder, int numberOfSquares, string label) {
+        //Make sure our correct square order is set to the correct level
+        smallDoorScript.correctSquare = squareOrder;
+        //Make sure the array that checks if all squares were pressed in the correct order
+        //Is as long as the number of squares there are in the melody
+        smallDoorScript.correctSquarePlayed = new bool[squareOrder.Length];
+        //Start us off at the first square
+        smallDoorScript.currentCorrectSquareIndex = 0;
+        smallDoorScript.nextSquareInCorrectOrder = smallDoorScript.correctSquare[currentCorrectSquareIndex];
+        //Make each square have a bool to turn on/off if they get played
+        //(we can also use this to check how many squares there are currently
+        smallDoorScript.squarePlayed = new bool[numberOfSquares];
+
+        //Make sure we know which level to go to
+        smallDoorScript.theLevelIGoTo = levelToGoTo;
+
+        //If we have a label, give us a label
+        smallDoorScript.myTextMesh.text = label;
+
+        //add one to the number of small doors
+        numberOfSmallDoors++;
+
+        //Make a door
+        Instantiate(smallDoor, new Vector3(8f, 1f, 0f), Quaternion.identity);
     }
 
     public void newLevel()
     //Do this every time we go to a new level
     {
-        //go up a level!
-        currentLevel++;
+        //Hi! new level no longer increments level count so be sure to
+        //Change doorScript.currentLevel before you activate it with doorScript.timeForLevelChange!!
 
         //We haven't played the level completion sound
         doorOpenPlayed = false;
@@ -256,16 +296,11 @@ public class doorController : MonoBehaviour {
             squareX = squareXPositionSmall;
             squareY = squareYPositionSmall;
 
-            //Make sure our correct squarae order is set to the correct level
             correctSquare = level1SquareOrder;
-            //Make sure the array that checks if all squares were pressed in the correct order
-            //Is as long as the number of squares there are in the melody
             correctSquarePlayed = new bool[level1SquareOrder.Length];
-            //Start us off at the first square
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
-            //Make each square have a bool to turn on/off if they get played
-            //(we can also use this to check how many squares there are currently
+
             squarePlayed = new bool[squareXPositionSmall.Length];
         } else if (currentLevel == 2){
             instructionSquareScript.mySound = level2Solution;
@@ -407,6 +442,8 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length];
+
+            makeSmallDoor(16, level1SquareOrder, squareXPositionBig.Length, "1");
         } else if (currentLevel == 13)
         {
             instructionSquareScript.mySound = level13Solution;
@@ -442,6 +479,32 @@ public class doorController : MonoBehaviour {
 
             correctSquare = level15SquareOrder;
             correctSquarePlayed = new bool[level15SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionBig.Length];
+        } else if (currentLevel == 16)
+        {
+            instructionSquareScript.mySound = level15Solution;
+
+            squareX = squareXPositionBig;
+            squareY = squareYPositionBig;
+
+            correctSquare = level16SquareOrder;
+            correctSquarePlayed = new bool[level16SquareOrder.Length];
+            currentCorrectSquareIndex = 0;
+            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+            squarePlayed = new bool[squareXPositionBig.Length + 1];
+        } else if (currentLevel == 17)
+        {
+            instructionSquareScript.mySound = level15Solution;
+
+            squareX = squareXPositionBig;
+            squareY = squareYPositionBig;
+
+            correctSquare = level17SquareOrder;
+            correctSquarePlayed = new bool[level17SquareOrder.Length];
             currentCorrectSquareIndex = 0;
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 

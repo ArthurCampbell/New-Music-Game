@@ -6,7 +6,7 @@ public class levelSelectMachineController : MonoBehaviour {
 
     public GameObject levelSelectSquare;
     levelSelectController levelSelectScript;
-    doorController doorScript;
+    //doorController doorScript;
 
     public float levelSelectSquareX;
     public float levelSelectSquareY;
@@ -17,7 +17,7 @@ public class levelSelectMachineController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         levelSelectScript = levelSelectSquare.GetComponent<levelSelectController>();
-        doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
+        //doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
 
         levelSelectSquareXStart = -6f;
         levelSelectSquareX = levelSelectSquareXStart;

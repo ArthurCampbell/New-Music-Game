@@ -38,7 +38,7 @@ public class levelSelectController : MonoBehaviour {
         if (coll.gameObject.tag == "Player"){
 
             if (myLevel != doorScript.currentLevel) {
-                doorScript.currentLevel = myLevel - 1;
+                doorScript.currentLevel = myLevel;
                 doorScript.timeForLevelChange = true;
             }
         }

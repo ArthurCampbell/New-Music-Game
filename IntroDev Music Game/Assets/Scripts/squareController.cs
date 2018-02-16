@@ -13,6 +13,7 @@ public class squareController : MonoBehaviour {
 
     public int myNumber;
     public doorController doorScript;
+    public smallDoorController smallDoorScript;
 
     public youController youScript;
 

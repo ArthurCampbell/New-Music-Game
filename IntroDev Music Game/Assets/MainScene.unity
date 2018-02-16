@@ -454,6 +454,91 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1126284563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1126284564}
+  - component: {fileID: 1126284566}
+  - component: {fileID: 1126284565}
+  m_Layer: 0
+  m_Name: DoorText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1126284564
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1126284563}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.01}
+  m_LocalScale: {x: 1, y: 0.33333334, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1541315437}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!102 &1126284565
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1126284563}
+  m_Text: 
+  m_OffsetZ: 0
+  m_CharacterSize: 0.05
+  m_LineSpacing: 1
+  m_Anchor: 4
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 100
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &1126284566
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1126284563}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &1541315435
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,7 +612,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6, y: 1, z: -0.009453418}
   m_LocalScale: {x: 1, y: 3, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1126284564}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -542,9 +628,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9c0f2bd1934e51a9894e5b565b4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myAudioSource: {fileID: 0}
+  doorOpenPlayed: 0
+  mySpriteRenderer: {fileID: 0}
   square: {fileID: 4045349673364292, guid: b911042c49b954b119c7aa49befe6ec9, type: 2}
   instructionSquare: {fileID: 4788907292861138, guid: 40a9198525d5f4db9bb531022a6b2b0d,
     type: 2}
+  smallDoor: {fileID: 1044646478853008, guid: 934ad00a99bd046e79b887f19af029fe, type: 2}
+  smallDoorScript: {fileID: 0}
   musicBits:
   - {fileID: 8300000, guid: 3c64f057ea68446a6b5ed1234aeb373d, type: 3}
   - {fileID: 8300000, guid: ac91089e8ca8d415c8d753666518c320, type: 3}
@@ -559,9 +650,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: adbe7857bdbe1408f80f593ae93e6e58, type: 3}
   - {fileID: 8300000, guid: ab7d14c2986f84ecf9fbddf90703ac2a, type: 3}
   doorOpen: {fileID: 0}
+  numberOfSmallDoors: 0
   squarePlayed: 0000000000000000000000
   correctSquarePlayed: 
+  nextSquareInCorrectOrder: 0
   currentCorrectSquareIndex: 0
+  levelCompleted: 0
+  currentLevel: 0
+  readyForLevelChange: 0
+  goodbyeSquares: 0
+  timeForLevelChange: 0
+  squaresDestroyed: 0
+  timeToDoorChange: 0
   level1SquareOrder: 00000000010000000200000003000000
   level1Solution: {fileID: 8300000, guid: f9640ce1d54c2494c9534db07ebb98f1, type: 3}
   level2SquareOrder: 03000000020000000100000000000000
@@ -578,8 +678,8 @@ MonoBehaviour:
   level7Solution: {fileID: 8300000, guid: b1f67a063f12646ef881cc6e56e7d22f, type: 3}
   level8SquareOrder: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
   level8Solution: {fileID: 8300000, guid: ee5d38a843394443cbb48fc39a56908d, type: 3}
-  level9SquareOrder: 00000000010000000200000001000000060000000700000000000000
-  level9Solution: {fileID: 8300000, guid: 178637d536d50497ca8d26e3e28c2e09, type: 3}
+  level9SquareOrder: 04000000050000000600000007000000060000000900000008000000
+  level9Solution: {fileID: 8300000, guid: 8a55c790bba974e3fa001607b220908e, type: 3}
   level10SquareOrder: 0a000000090000000800000009000000070000000600000005000000
   level10Solution: {fileID: 8300000, guid: 93020a12da2de468da3e28e4d26ed1b7, type: 3}
   level11SquareOrder: 0400000005000000060000000700000000000000070000000800000009000000
@@ -592,15 +692,10 @@ MonoBehaviour:
   level14Solution: {fileID: 8300000, guid: 30bca49b6a5c345eab032724f131660b, type: 3}
   level15SquareOrder: 0000000002000000060000000400000006000000080000000a000000
   level15Solution: {fileID: 8300000, guid: 12a50685103a74ee9a8def438794c28a, type: 3}
-  levelCompleted: 0
-  currentLevel: 0
-  readyForLevelChange: 0
-  goodbyeSquares: 0
-  timeForLevelChange: 0
-  squaresDestroyed: 0
-  myAudioSource: {fileID: 0}
-  doorOpenPlayed: 0
-  mySpriteRenderer: {fileID: 0}
+  level16SquareOrder: 0c0000000c0000000c000000
+  level16Solution: {fileID: 0}
+  level17SquareOrder: 
+  level17Solution: {fileID: 0}
   squareX:
   - -1
   - 0
@@ -783,7 +878,6 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  timeToDoorChange: 0
 --- !u!82 &1541315439
 AudioSource:
   m_ObjectHideFlags: 0
@@ -958,7 +1052,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.5, y: 0.5}
     newSize: {x: 1.05, y: 1.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1021,8 +1115,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9946b6a86660f4ec6bf486aa02728fb9, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 27e668cd56662456db5b25d3df28cfb5, type: 3}
+  m_Color: {r: 0.8206897, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

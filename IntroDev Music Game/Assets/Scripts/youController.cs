@@ -74,8 +74,10 @@ public class youController : MonoBehaviour {
             canSwitchCharacters = !canSwitchCharacters;
         }
 
-        if (doorScript.currentLevel > 12) {
+        if (doorScript.currentLevel > 12 && doorScript.currentLevel < 16) {
             canSwitchCharacters = true;
+        } else {
+            canSwitchCharacters = false;
         }
 
         transform.position = pos;

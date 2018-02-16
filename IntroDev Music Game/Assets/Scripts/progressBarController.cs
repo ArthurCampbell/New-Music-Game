@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class progressBarController : MonoBehaviour {
 
-    SpriteRenderer mySpriteRenderer;
+    //SpriteRenderer mySpriteRenderer;
 
     doorController doorScript;
 
@@ -13,7 +13,7 @@ public class progressBarController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        mySpriteRenderer = GetComponent<SpriteRenderer>();
+        //mySpriteRenderer = GetComponent<SpriteRenderer>();
         doorScript = GameObject.FindGameObjectWithTag("Door").GetComponent<doorController>();
         progressBarCover = GameObject.Find("Progress Bar Cover");
         progressBarCoverSpriteRenderer = progressBarCover.GetComponent<SpriteRenderer>();

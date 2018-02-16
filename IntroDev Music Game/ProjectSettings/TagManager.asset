@@ -8,6 +8,7 @@ TagManager:
   - Drumstick
   - Square
   - Level Selector
+  - Small Door
   layers:
   - Default
   - TransparentFX
