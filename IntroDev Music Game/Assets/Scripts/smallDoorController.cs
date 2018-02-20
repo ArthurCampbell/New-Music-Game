@@ -17,7 +17,7 @@ public class smallDoorController : MonoBehaviour {
     public float timeToDoorChange;
     public bool readyForLevelChange;
 
-    public int theLevelIGoTo;
+    public string myDirection;
 
     AudioSource myAudioSource;
     public SpriteRenderer mySpriteRenderer;
@@ -126,8 +126,14 @@ public class smallDoorController : MonoBehaviour {
         if (coll.gameObject.tag == "Player" && readyForLevelChange)
         {
    
-            //go to our level
-            doorScript.currentLevel = theLevelIGoTo;
+            //This is real fucked up but in order to change levels if the player has
+            //gone through this door we change the main door's direction to our direction
+            //And then tell the main door to change levels -- effectively meaning any time
+            //we go through this door we're actually just changing where the main door goes
+            //and then going through the main door
+            doorScript.myDirection = myDirection;
+
+            doorScript.findNextLevel();
 
             //Prepare to change to it
             doorScript.timeForLevelChange = true;

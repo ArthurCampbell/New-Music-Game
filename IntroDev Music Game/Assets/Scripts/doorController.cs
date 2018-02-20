@@ -15,6 +15,7 @@ public class doorController : MonoBehaviour {
     public Transform instructionSquare;
     public GameObject smallDoor;
     public smallDoorController smallDoorScript;
+    public mapController mapScript;
     public AudioClip[] musicBits;
     public AudioClip doorOpen;
 
@@ -28,11 +29,14 @@ public class doorController : MonoBehaviour {
 
     public bool levelCompleted;
     public int currentLevel;
+    public int[] mapPosition;
+    public string myDirection;
     public bool readyForLevelChange;
     public bool goodbyeSquares;
     public bool timeForLevelChange;
     public int squaresDestroyed;
     public float timeToDoorChange;
+
 
     //HELLO HI IF YOU WANT TO EDIT THE MELODY/SOLUTION ONLY EDIT THE ARRAYS WITH LEVEL[number]
     //IN FRONT OF THEM THANK YOU
@@ -115,10 +119,16 @@ public class doorController : MonoBehaviour {
     public float[] squareXPositionBig;
     public float[] squareYPositionBig;
 
+
+    public int testMapX;
+    public int testMapY;
+
 	// Use this for initialization
     void Start () {
         //We start on the first level,
         currentLevel = 1;
+        //Which is at this position on the map array
+        mapPosition[0] = 0; mapPosition[1] = 9;
 
         doorOpen = musicBits[musicBits.Length - 1];
         myAudioSource = GetComponent<AudioSource>();
@@ -131,11 +141,30 @@ public class doorController : MonoBehaviour {
 
         smallDoorScript = smallDoor.GetComponent<smallDoorController>();
 
+        mapScript = GameObject.Find("map").GetComponent<mapController>();
+
         newLevel();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        /* use this to check positions on the map array
+        if (Input.GetKeyDown(KeyCode.N)) {
+            testMapX--;
+        }
+        if (Input.GetKeyDown(KeyCode.M)) {
+            testMapX++;
+        }
+        if (Input.GetKeyDown(KeyCode.H)) {
+            testMapY--;
+
+        }
+        if (Input.GetKeyDown(KeyCode.J)) {
+            testMapY++;
+        } 
+        Debug.Log(testMapX + ", " + testMapY);
+        Debug.Log(mapScript.mapArray[testMapX, testMapY]);
+        */
 
         //Label us with the current level
         myTextMesh.text = currentLevel + "";
@@ -215,22 +244,15 @@ public class doorController : MonoBehaviour {
     {
         //If we collide with the player and we are ready for a level change
         if (coll.gameObject.tag == "Player" && readyForLevelChange){
-         
-            //If we're at level 15
-            if (currentLevel == 16) {
-                //start over
-                currentLevel = 0;
-            } else {
-                currentLevel++;
-            }
 
-        //Prepare to change to the next level
-        timeForLevelChange = true;
+            findNextLevel();
 
+            //Prepare to change to the next level
+            timeForLevelChange = true;
         }
     }
 
-    public void makeSmallDoor(int levelToGoTo, int[] squareOrder, int numberOfSquares, string label) {
+    public void makeSmallDoor(string direction, int[] squareOrder, int numberOfSquares, string label, bool solved) {
         //Make sure our correct square order is set to the correct level
         smallDoorScript.correctSquare = squareOrder;
         //Make sure the array that checks if all squares were pressed in the correct order
@@ -243,11 +265,14 @@ public class doorController : MonoBehaviour {
         //(we can also use this to check how many squares there are currently
         smallDoorScript.squarePlayed = new bool[numberOfSquares];
 
-        //Make sure we know which level to go to
-        smallDoorScript.theLevelIGoTo = levelToGoTo;
+        //Make sure we know which direction we're facing
+        smallDoorScript.myDirection = direction;
 
         //If we have a label, give us a label
         smallDoorScript.myTextMesh.text = label;
+
+        //Are we open? (used to make doors that are just open all the time
+        smallDoorScript.readyForLevelChange = solved;
 
         //add one to the number of small doors
         numberOfSmallDoors++;
@@ -256,11 +281,24 @@ public class doorController : MonoBehaviour {
         Instantiate(smallDoor, new Vector3(8f, 1f, 0f), Quaternion.identity);
     }
 
+    public void findNextLevel() {
+        //For the third time, we have changed how we switch levels
+        //We now use our direction to find the next level (using the map array in the map object)
+        Vector2Int directionVector = mapScript.findNextRoom(myDirection);
+
+        //we then change our current position to the next level
+        mapPosition[0] = directionVector.x;
+        mapPosition[1] = directionVector.y;
+
+        //And then we set the current level to the corresponding place on the map
+        currentLevel = mapScript.mapArray[mapPosition[0], mapPosition[1]];
+
+        Debug.Log(mapPosition[0] + " " + mapPosition[1]);
+    }
+
     public void newLevel()
     //Do this every time we go to a new level
     {
-        //Hi! new level no longer increments level count so be sure to
-        //Change doorScript.currentLevel before you activate it with doorScript.timeForLevelChange!!
 
         //We haven't played the level completion sound
         doorOpenPlayed = false;
@@ -288,6 +326,12 @@ public class doorController : MonoBehaviour {
 
 
         //Depending on what level we're on
+        if (currentLevel == 0) {
+            //If we're at level 0 this is a problem so reset to level 12
+            currentLevel = 12;
+
+            Debug.Log("Oops! You're on level 0! Probably should fix that, buddy!");
+        }
         if (currentLevel == 1){
             //Make the instruction square play the correct sound for the solution
             instructionSquareScript.mySound = level1Solution;
@@ -302,6 +346,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionSmall.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 2){
             instructionSquareScript.mySound = level2Solution;
 
@@ -314,6 +361,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionSmall.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 3){
             instructionSquareScript.mySound = level3Solution;
 
@@ -326,6 +376,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionMedium.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 4){
             instructionSquareScript.mySound = level4Solution;
 
@@ -338,6 +391,10 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionMedium.Length];
+
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 5)
         {
             instructionSquareScript.mySound = level5Solution;
@@ -351,6 +408,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionMedium.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 6)
         {
             instructionSquareScript.mySound = level6Solution;
@@ -364,6 +424,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionMedium.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 7)
         {
             instructionSquareScript.mySound = level7Solution;
@@ -377,6 +440,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionMedium.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 8)
         {
             instructionSquareScript.mySound = level8Solution;
@@ -390,6 +456,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 9)
         {
             instructionSquareScript.mySound = level9Solution;
@@ -403,6 +472,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 10)
         {
             instructionSquareScript.mySound = level10Solution;
@@ -416,6 +488,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 11)
         {
             instructionSquareScript.mySound = level11Solution;
@@ -429,6 +504,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 12)
         {
             instructionSquareScript.mySound = level12Solution;
@@ -443,7 +521,10 @@ public class doorController : MonoBehaviour {
 
             squarePlayed = new bool[squareXPositionBig.Length];
 
-            makeSmallDoor(16, level1SquareOrder, squareXPositionBig.Length, "1");
+            makeSmallDoor("UP", level1SquareOrder, squareXPositionBig.Length, "1", false);
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 13)
         {
             instructionSquareScript.mySound = level13Solution;
@@ -457,6 +538,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 14)
         {
             instructionSquareScript.mySound = level14Solution;
@@ -470,6 +554,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 15)
         {
             instructionSquareScript.mySound = level15Solution;
@@ -483,6 +570,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length];
+
+
+            myDirection = "RIGHT";
         } else if (currentLevel == 16)
         {
             instructionSquareScript.mySound = level15Solution;
@@ -496,6 +586,9 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length + 1];
+
+
+            myDirection = "UP";
         } else if (currentLevel == 17)
         {
             instructionSquareScript.mySound = level15Solution;
@@ -545,5 +638,9 @@ public class doorController : MonoBehaviour {
             Instantiate(instructionSquare, new Vector3(-4f, 1f, 0f), Quaternion.identity);
         }
 
+        //Move us to the correct location
+        if (myDirection == "RIGHT") {
+            
+        }
     }
 }

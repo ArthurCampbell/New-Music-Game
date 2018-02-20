@@ -276,7 +276,7 @@ MonoBehaviour:
   doorOpenPlayed: 0
   timeToDoorChange: 0
   readyForLevelChange: 0
-  theLevelIGoTo: 16
+  myDirection: UP
   mySpriteRenderer: {fileID: 0}
   myTextMesh: {fileID: 102646415700597274}
 --- !u!212 &212586673612669912
