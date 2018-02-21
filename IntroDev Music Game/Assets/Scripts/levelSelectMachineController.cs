@@ -30,7 +30,7 @@ public class levelSelectMachineController : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.L) && levelSelectSquaresMade == false){
             //For Each Level
-            for (int x = 1; x <= 15; x++) {
+            for (int x = 1; x <= 16; x++) {
                 //assign it to a level select square
                 levelSelectScript.myLevel = x;
                 //Spawn a level select square

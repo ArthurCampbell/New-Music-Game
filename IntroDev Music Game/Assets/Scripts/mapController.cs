@@ -30,6 +30,9 @@ public class mapController : MonoBehaviour {
         mapArray[11, 8] = 16;
         mapArray[11, 7] = 17;
 
+        mapArray[11, 10] = 15;
+        mapArray[12, 10] = 14;
+
         //Debug.Log(mapArray);
 	}
 	

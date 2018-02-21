@@ -241,7 +241,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1675004026587162}
-  m_Text: 1
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 0.05
   m_LineSpacing: 1
@@ -267,16 +267,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mySolutionCompleted: 0
-  squarePlayed: 0000000000000000000000
-  correctSquare: 00000000010000000200000003000000
-  correctSquarePlayed: 00000000
-  nextSquareInCorrectOrder: 0
+  squarePlayed: 00000000
+  correctSquare: ffffffffffffffffffffffff
+  correctSquarePlayed: 000000
+  nextSquareInCorrectOrder: -1
   currentCorrectSquareIndex: 0
   doorOpen: {fileID: 8300000, guid: fc7ef323be7e2423d8b8ba03e1ca0898, type: 3}
   doorOpenPlayed: 0
   timeToDoorChange: 0
-  readyForLevelChange: 0
-  myDirection: UP
+  readyForLevelChange: 1
+  myDirection: DOWN
   mySpriteRenderer: {fileID: 0}
   myTextMesh: {fileID: 102646415700597274}
 --- !u!212 &212586673612669912

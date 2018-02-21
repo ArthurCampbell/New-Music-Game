@@ -36,11 +36,14 @@ public class doorController : MonoBehaviour {
     public bool timeForLevelChange;
     public int squaresDestroyed;
     public float timeToDoorChange;
+    public bool[] mainDoorOpened;
 
 
     //HELLO HI IF YOU WANT TO EDIT THE MELODY/SOLUTION ONLY EDIT THE ARRAYS WITH LEVEL[number]
     //IN FRONT OF THEM THANK YOU
     //this is because we set all other arrays based on this one so things could get confusing otherwise
+    public int[] levelNullSquareOrder;
+
     public int[] level1SquareOrder;
     public AudioClip level1Solution;
 
@@ -134,6 +137,7 @@ public class doorController : MonoBehaviour {
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = doorOpen;
         doorOpenPlayed = false;
+        mainDoorOpened = new bool[17];
 
         mySpriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -222,11 +226,14 @@ public class doorController : MonoBehaviour {
             if (timeToDoorChange < myAudioSource.clip.length + musicBits[correctSquare[correctSquare.Length - 2]].length){
                 timeToDoorChange += Time.deltaTime;
             } else {
-                //When they have, change to the door success color
-                mySpriteRenderer.color = new Color(0, 1, 0);
-                //And
+                //If we're done, we are ready to change levels
                 readyForLevelChange = true;
             }
+        }
+
+        if (readyForLevelChange) {
+            //if we're ready to change colors, open the door
+            mySpriteRenderer.color = new Color(0, 1, 0);
         }
 
         if (timeForLevelChange) {
@@ -244,6 +251,7 @@ public class doorController : MonoBehaviour {
     {
         //If we collide with the player and we are ready for a level change
         if (coll.gameObject.tag == "Player" && readyForLevelChange){
+            mainDoorOpened[currentLevel] = true;
 
             findNextLevel();
 
@@ -300,20 +308,40 @@ public class doorController : MonoBehaviour {
     //Do this every time we go to a new level
     {
 
-        //We haven't played the level completion sound
-        doorOpenPlayed = false;
-        //The door needs to wait until all sound stops before becoming enterable 
-        timeToDoorChange = 0;
-        //We have not completed this new level
-        levelCompleted = false;
-        //Thus we are not ready for a level change
-        readyForLevelChange = false;
-        //Thus we should not get rid of the squares
-        goodbyeSquares = false;
-        squaresDestroyed = 0;
-        timeForLevelChange = false;
-        //Reset our color
-        mySpriteRenderer.color = new Color(1, 0, 0);
+        //If we've already solved the main puzzle
+        if (mainDoorOpened[currentLevel]) {
+            //We have played the level completion sound
+            doorOpenPlayed = true;
+            //The door should already be enterable
+            timeToDoorChange = 5;
+            //we have completed the level
+            levelCompleted = true;
+            //Thus we are ready for a level change
+            readyForLevelChange = true;
+            //But we should not get rid of the squares
+            goodbyeSquares = false;
+            squaresDestroyed = 0;
+            timeForLevelChange = false;
+            // or reset our color
+            mySpriteRenderer.color = new Color(0, 1, 0);
+            //If     not,
+        } else {
+            //We haven't played the level completion sound
+            doorOpenPlayed = false;
+            //The door needs to wait until all sound stops before becoming enterable 
+            timeToDoorChange = 0;
+            //if we have not already completed this level
+            //We have not completed this new level
+            levelCompleted = false;
+            //Thus we are not ready for a level change
+            readyForLevelChange = false;
+            //Thus we should not get rid of the squares
+            goodbyeSquares = false;
+            squaresDestroyed = 0;
+            timeForLevelChange = false;
+            //Reset our color
+            mySpriteRenderer.color = new Color(1, 0, 0);
+        }
 
         //Grab the square controller cuz we're gonna need to reset the squares
         squareController squareScript = square.GetComponent<squareController>();
@@ -324,11 +352,60 @@ public class doorController : MonoBehaviour {
         //(we only need it to reset their position at the start of each level
         youController youScript = GameObject.FindWithTag("Player").GetComponent<youController>();
 
+        //Move the player to the correct area depending on where the door we went in was
+        //We do this at the top before we change myDirection to the correct direction for the next level
+        Vector3 pos = new Vector3();
+
+        if (currentLevel == 15) {
+            //If we're on level 15 we need a slightly different position
+            pos = new Vector3(5f, 0f, -.15f);
+        } else if (myDirection == "LEFT") {
+            //If we leave from left, spawn on bottom
+            pos = new Vector3(5f, 1f, -.15f);
+        } else if (myDirection == "RIGHT") {
+            //If we leave from right, come in on left
+            pos = new Vector3(-5f, 1f, -.15f);
+        } else if (myDirection == "UP") {
+            //If we leave from top, spawn on bottom
+            pos = new Vector3(1f, -1f, -.15f);
+        } else if (myDirection == "DOWN") {
+            //If we leave from bottom, spawn on top
+            pos = new Vector3(1f, 3f, -.15f);
+        }
+        /*
+        if (currentLevel < 13)
+        {
+            //move the player back to the start
+            pos = new Vector3(-6f, 1f, -.15f);
+        }
+        else if (currentLevel == 13)
+        {
+            //move the player back to the start
+            pos = new Vector3(-6f, 0f, -.15f);
+        }
+        else if (currentLevel == 14)
+        {
+            //move the player back to the start
+            pos = new Vector3(1f, 3f, -.15f);
+        }
+        else
+        {
+            //move the player back to the start
+            pos = new Vector3(7f, 0f, -.15f);
+        }*/
+        //END NEW CODE
+
+        //The z is -.15 so they're in front of everything
+        youScript.transform.position = pos;
 
         //Depending on what level we're on
         if (currentLevel == 0) {
             //If we're at level 0 this is a problem so reset to level 12
             currentLevel = 12;
+
+            //reset our map position to level 12
+            mapPosition[0] = 11;
+            mapPosition[1] = 9;
 
             Debug.Log("Oops! You're on level 0! Probably should fix that, buddy!");
         }
@@ -362,6 +439,8 @@ public class doorController : MonoBehaviour {
 
             squarePlayed = new bool[squareXPositionSmall.Length];
 
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length,"", true);
+
 
             myDirection = "RIGHT";
         } else if (currentLevel == 3){
@@ -377,6 +456,8 @@ public class doorController : MonoBehaviour {
 
             squarePlayed = new bool[squareXPositionMedium.Length];
 
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
+
 
             myDirection = "RIGHT";
         } else if (currentLevel == 4){
@@ -391,6 +472,8 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionMedium.Length];
+
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
 
 
 
@@ -409,6 +492,8 @@ public class doorController : MonoBehaviour {
 
             squarePlayed = new bool[squareXPositionMedium.Length];
 
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
+
 
             myDirection = "RIGHT";
         } else if (currentLevel == 6)
@@ -424,6 +509,8 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionMedium.Length];
+
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
 
 
             myDirection = "RIGHT";
@@ -441,6 +528,8 @@ public class doorController : MonoBehaviour {
 
             squarePlayed = new bool[squareXPositionMedium.Length];
 
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
+
 
             myDirection = "RIGHT";
         } else if (currentLevel == 8)
@@ -456,6 +545,8 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length];
+
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
 
 
             myDirection = "RIGHT";
@@ -473,6 +564,8 @@ public class doorController : MonoBehaviour {
 
             squarePlayed = new bool[squareXPositionBig.Length];
 
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
+
 
             myDirection = "RIGHT";
         } else if (currentLevel == 10)
@@ -489,6 +582,8 @@ public class doorController : MonoBehaviour {
 
             squarePlayed = new bool[squareXPositionBig.Length];
 
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
+
 
             myDirection = "RIGHT";
         } else if (currentLevel == 11)
@@ -504,6 +599,8 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length];
+
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
 
 
             myDirection = "RIGHT";
@@ -523,6 +620,8 @@ public class doorController : MonoBehaviour {
 
             makeSmallDoor("UP", level1SquareOrder, squareXPositionBig.Length, "1", false);
 
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
+
 
             myDirection = "RIGHT";
         } else if (currentLevel == 13)
@@ -539,8 +638,15 @@ public class doorController : MonoBehaviour {
 
             squarePlayed = new bool[squareXPositionBig.Length];
 
+            makeSmallDoor("LEFT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
 
+            //OLDE CODE
             myDirection = "RIGHT";
+            //END OLDE CODE
+
+            //NEW CODE
+            myDirection = "DOWN";
+            //END NEW CODE
         } else if (currentLevel == 14)
         {
             instructionSquareScript.mySound = level14Solution;
@@ -555,8 +661,16 @@ public class doorController : MonoBehaviour {
 
             squarePlayed = new bool[squareXPositionBig.Length];
 
+            makeSmallDoor("UP", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
 
+
+            //OLDE CODE
             myDirection = "RIGHT";
+            //END OLDE CODE
+
+            //NEW CODE
+            myDirection = "LEFT";
+            //END NEW CODE
         } else if (currentLevel == 15)
         {
             instructionSquareScript.mySound = level15Solution;
@@ -571,8 +685,16 @@ public class doorController : MonoBehaviour {
 
             squarePlayed = new bool[squareXPositionBig.Length];
 
+            makeSmallDoor("RIGHT", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
 
+
+            //OLDE CODE
             myDirection = "RIGHT";
+            //END OLDE CODE
+
+            //NEW CODE
+            myDirection = "UP";
+            //END NEW CODE
         } else if (currentLevel == 16)
         {
             instructionSquareScript.mySound = level15Solution;
@@ -586,6 +708,8 @@ public class doorController : MonoBehaviour {
             nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
 
             squarePlayed = new bool[squareXPositionBig.Length + 1];
+
+            makeSmallDoor("DOWN", levelNullSquareOrder, squareXPositionSmall.Length, "", true);
 
 
             myDirection = "UP";
@@ -613,34 +737,58 @@ public class doorController : MonoBehaviour {
             Instantiate(square, new Vector3(squareX[x], squareY[x], 0f), Quaternion.identity);
         }
 
-        Vector3 pos = new Vector3();
-
-
-        if (currentLevel < 13) {
-            //move the player back to the start
-            pos = new Vector3(-6f, 1f, -.15f);
-        } else if (currentLevel < 15){
-            //move the player back to the start
-            pos = new Vector3(-7f, 1f, -.15f);
-        } else {
-            //move the player back to the start
-            pos = new Vector3(-6f, 1f, -.15f);
-        }
-
-        //The z is -.15 so they're in front of everything
-        youScript.transform.position = pos;
-
-
         //Make the instruction square
+        //OLDE CODE
+        /*
         if (currentLevel < 15) {
             Instantiate(instructionSquare, new Vector3(-5f, 1f, 0f), Quaternion.identity);
         } else {
             Instantiate(instructionSquare, new Vector3(-4f, 1f, 0f), Quaternion.identity);
         }
+        */
+        //END OLDE CODE
+
+        //NEW CODE
+
+        //always make the instruction square on the left side of the screen
+        Instantiate(instructionSquare, new Vector3(-4f, 1f, 0f), Quaternion.identity);
+
+        //END NEW CODE
+
+
+        //START NEW CODE
+        pos = transform.position;
+        Vector3 size = transform.localScale;
 
         //Move us to the correct location
         if (myDirection == "RIGHT") {
-            
+            pos = new Vector3(6f, 1f, 0f);
+            size = new Vector3(1f, 3f, 1f);
+
+            myTextMesh.transform.localScale = new Vector3(1f, 0.33f, 1f);
+        } else if (myDirection == "LEFT") {
+            pos = new Vector3(-6f, 1f, 0f);
+            size = new Vector3(1f, 3f, 1f);
+
+            myTextMesh.transform.localScale = new Vector3(1f, 0.33f, 1f);
+        } else if (myDirection == "UP") {
+            pos = new Vector3(1f, 4f, 0f);
+            size = new Vector3(3f, 1f, 1f);
+
+            myTextMesh.transform.localScale = new Vector3(0.33f, 1f, 1f);
+        } else if (myDirection == "DOWN") {
+            pos = new Vector3(1f, -2f, 0f);
+            size = new Vector3(3f, 1f, 1f);
+
+            myTextMesh.transform.localScale = new Vector3(0.33f, 1f, 1f);
         }
+
+        transform.position = pos;
+        transform.localScale = size;
+
+        if (currentLevel == 16) {
+            myTextMesh.text = "you win!";
+        }
+        //END NEW CODE
     }
 }

@@ -706,6 +706,8 @@ MonoBehaviour:
   timeForLevelChange: 0
   squaresDestroyed: 0
   timeToDoorChange: 0
+  mainDoorOpened: 
+  levelNullSquareOrder: ffffffffffffffffffffffff
   level1SquareOrder: 00000000010000000200000003000000
   level1Solution: {fileID: 8300000, guid: f9640ce1d54c2494c9534db07ebb98f1, type: 3}
   level2SquareOrder: 03000000020000000100000000000000
@@ -1325,7 +1327,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2135016289}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -2.5, z: 0}
+  m_LocalPosition: {x: 0.5, y: -3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2010747903}

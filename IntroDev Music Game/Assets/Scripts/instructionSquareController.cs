@@ -63,7 +63,7 @@ public class instructionSquareController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D coll)
     {
         //and that thing is the player
-        if (coll.gameObject.tag == "Player")
+        if (coll.gameObject.tag == "Player" || coll.gameObject.tag == "Drumstick")
         {
             //if the door open sound is playing
             if (doorScript.doorOpenPlayed && doorScript.timeToDoorChange < doorScript.myAudioSource.clip.length)

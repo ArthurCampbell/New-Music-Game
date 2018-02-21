@@ -36,6 +36,45 @@ public class smallDoorController : MonoBehaviour {
         mySolutionCompleted = false;
         doorOpenPlayed = false;
         myAudioSource.clip = doorOpen;
+
+        //NEW CODE
+        Vector3 pos = transform.position;
+        Vector3 size = transform.localScale;
+
+        //Move us to the correct location
+        //Move us to the correct location
+        if (myDirection == "RIGHT")
+        {
+            pos = new Vector3(6f, 1f, 0f);
+            size = new Vector3(1f, 3f, 1f);
+
+            myTextMesh.transform.localScale = new Vector3(1f, 0.33f, 1f);
+        }
+        else if (myDirection == "LEFT")
+        {
+            pos = new Vector3(-6f, 1f, 0f);
+            size = new Vector3(1f, 3f, 1f);
+
+            myTextMesh.transform.localScale = new Vector3(1f, 0.33f, 1f);
+        }
+        else if (myDirection == "UP")
+        {
+            pos = new Vector3(1f, 4f, 0f);
+            size = new Vector3(3f, 1f, 1f);
+
+            myTextMesh.transform.localScale = new Vector3(0.33f, 1f, 1f);
+        }
+        else if (myDirection == "DOWN")
+        {
+            pos = new Vector3(1f, -2f, 0f);
+            size = new Vector3(3f, 1f, 1f);
+
+            myTextMesh.transform.localScale = new Vector3(0.33f, 1f, 1f);
+        }
+
+        transform.position = pos;
+        transform.localScale = size;
+        //END NEW CODE
 	}
 	
 	// Update is called once per frame
@@ -104,11 +143,14 @@ public class smallDoorController : MonoBehaviour {
             }
             else
             {
-                //When they have, change to the door success color
-                mySpriteRenderer.color = new Color(0, 1, 0);
-                //And
+                //When they have
                 readyForLevelChange = true;
             }
+        }
+
+        //If we're ready for a level change
+        if (readyForLevelChange == true) {
+            mySpriteRenderer.color = new Color(0, 1, 0);
         }
 
         //If we get a message from the door that the level is going to change
