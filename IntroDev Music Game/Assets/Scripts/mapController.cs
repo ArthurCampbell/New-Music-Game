@@ -22,8 +22,8 @@ public class mapController : MonoBehaviour {
             }
         }
 
-        //Levels 1-15 in straight line from [0, 9] to [14, 9]
-        for (int x = 0; x < 15; x++){
+        //Levels 1-13 in straight line from [0, 9] to [14, 9]
+        for (int x = 0; x < 13; x++){
             mapArray[x, 9] = x + 1;
         }
 
@@ -32,6 +32,14 @@ public class mapController : MonoBehaviour {
 
         mapArray[11, 10] = 15;
         mapArray[12, 10] = 14;
+
+        mapArray[6, 10] = 1;
+        mapArray[7, 10] = 2;
+        mapArray[8, 10] = 3;
+
+        mapArray[6, 11] = 6;
+        mapArray[7, 11] = 5;
+        mapArray[8, 11] = 4;
 
         //Debug.Log(mapArray);
 	}

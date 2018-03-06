@@ -5,7 +5,6 @@ using UnityEngine;
 public class smallDoorController : MonoBehaviour {
 
     public bool mySolutionCompleted;
-    public bool[] squarePlayed;
     public int[] correctSquare;
     public bool[] correctSquarePlayed;
     public int nextSquareInCorrectOrder;
@@ -52,7 +51,7 @@ public class smallDoorController : MonoBehaviour {
         }
         else if (myDirection == "LEFT")
         {
-            pos = new Vector3(-6f, 1f, 0f);
+            pos = new Vector3(-5f, 1f, 0f);
             size = new Vector3(1f, 3f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(1f, 0.33f, 1f);
@@ -155,11 +154,13 @@ public class smallDoorController : MonoBehaviour {
 
         //If we get a message from the door that the level is going to change
         if (doorScript.goodbyeSquares) {
+            Debug.Log("smallDoor Destroyed!" + Time.frameCount);
             //Record we destroyed ourselves
             doorScript.numberOfSmallDoors--;
             //destroy ourselves
             Destroy(gameObject);
         }
+        Debug.Log("test" + Time.frameCount);
 	}
 
     private void OnCollisionEnter2D(Collision2D coll)
@@ -183,8 +184,7 @@ public class smallDoorController : MonoBehaviour {
             //Record we're about to destory ourselves
             doorScript.numberOfSmallDoors--;
 
-            //Delete ourselves
-            Destroy(gameObject);
+            //Don't destroy ourselves cuz we get destroyed when we go thru the main door :P
         }
     }
 }

@@ -267,7 +267,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mySolutionCompleted: 0
-  squarePlayed: 00000000
   correctSquare: ffffffffffffffffffffffff
   correctSquarePlayed: 000000
   nextSquareInCorrectOrder: -1
@@ -276,7 +275,7 @@ MonoBehaviour:
   doorOpenPlayed: 0
   timeToDoorChange: 0
   readyForLevelChange: 1
-  myDirection: DOWN
+  myDirection: LEFT
   mySpriteRenderer: {fileID: 0}
   myTextMesh: {fileID: 102646415700597274}
 --- !u!212 &212586673612669912

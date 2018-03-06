@@ -57,7 +57,7 @@ public class drumstickController : MonoBehaviour {
 
 
         transform.position = pos;
-        player.transform.localPosition = pos;
+        player.transform.position = pos;
 	}
 
     void switchCharacters() {
