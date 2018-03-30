@@ -8,6 +8,8 @@ public class progressBarController : MonoBehaviour {
 
     doorController doorScript;
 
+    SpriteRenderer mySpriteRenderer;
+
     GameObject progressBarCover;
     SpriteRenderer progressBarCoverSpriteRenderer;
 
@@ -15,13 +17,11 @@ public class progressBarController : MonoBehaviour {
 	void Start () {
         //mySpriteRenderer = GetComponent<SpriteRenderer>();
         doorScript = GameObject.FindGameObjectWithTag("Door").GetComponent<doorController>();
+
+        mySpriteRenderer = GetComponent<SpriteRenderer>();
+
         progressBarCover = GameObject.Find("Progress Bar Cover");
         progressBarCoverSpriteRenderer = progressBarCover.GetComponent<SpriteRenderer>();
-
-        //Make the progress bar cover the same color as the background
-        Color coverColor = Camera.main.backgroundColor;
-        coverColor.a = 1f;
-        progressBarCoverSpriteRenderer.color = coverColor;
 
 
         //Make the progress bar 8 long
@@ -31,6 +31,17 @@ public class progressBarController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        //Make us the appropriate color
+        mySpriteRenderer.color = doorScript.CurrentColorPalette[0];
+
+        //Make the progress bar cover the same color as the background
+        Color coverColor = Camera.main.backgroundColor;
+        coverColor.a = 1f;
+        progressBarCoverSpriteRenderer.color = coverColor;
+
+        //We do the above things every frame because the progress bar doesn't respawn on room change
+        //Could probably change this for optimization if it runs bad
         
 
         //Find out how far we are in the progress of finishing the melody
@@ -48,7 +59,7 @@ public class progressBarController : MonoBehaviour {
         else
         {
             progressBarCover.transform.localPosition = new Vector3(
-                progress, 0f, -0.01f);
+                progress, 0f, -0.5f);
         }
 
 

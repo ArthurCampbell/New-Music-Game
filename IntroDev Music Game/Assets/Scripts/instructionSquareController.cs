@@ -22,6 +22,8 @@ public class instructionSquareController : MonoBehaviour
 
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
         youScript = GameObject.FindWithTag("Player").GetComponent<youController>();
+
+        mySpriteRenderer.color = doorScript.CurrentColorPalette[1];
     }
 
     // Update is called once per frame

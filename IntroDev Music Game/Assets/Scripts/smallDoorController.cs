@@ -10,6 +10,8 @@ public class smallDoorController : MonoBehaviour {
     public int nextSquareInCorrectOrder;
     public int currentCorrectSquareIndex;
 
+    public Color openDoorColor;
+    public Color closedDoorColor;
 
     public AudioClip doorOpen;
     public bool doorOpenPlayed;
@@ -32,11 +34,21 @@ public class smallDoorController : MonoBehaviour {
 
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
 
+        openDoorColor = doorScript.openDoorColor;
+        closedDoorColor = doorScript.closedDoorColor;
+
         mySolutionCompleted = false;
         doorOpenPlayed = false;
         myAudioSource.clip = doorOpen;
 
-        //NEW CODE
+        //we do this up here so the doors don't flash when we change levels
+        //(this became a problem when we moved the doors to the edge of the screen)
+        if (readyForLevelChange == true)
+        {
+            mySpriteRenderer.color = openDoorColor;
+        }
+
+
         Vector3 pos = transform.position;
         Vector3 size = transform.localScale;
 
@@ -44,28 +56,28 @@ public class smallDoorController : MonoBehaviour {
         //Move us to the correct location
         if (myDirection == "RIGHT")
         {
-            pos = new Vector3(6f, 1f, 0f);
+            pos = new Vector3(7.15f, 1f, 0f);
             size = new Vector3(1f, 3f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(1f, 0.33f, 1f);
         }
         else if (myDirection == "LEFT")
         {
-            pos = new Vector3(-5f, 1f, 0f);
+            pos = new Vector3(-6.16f, 1f, 0f);
             size = new Vector3(1f, 3f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(1f, 0.33f, 1f);
         }
         else if (myDirection == "UP")
         {
-            pos = new Vector3(1f, 4f, 0f);
+            pos = new Vector3(1f, 6f, 0f);
             size = new Vector3(3f, 1f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(0.33f, 1f, 1f);
         }
         else if (myDirection == "DOWN")
         {
-            pos = new Vector3(1f, -2f, 0f);
+            pos = new Vector3(1f, -4f, 0f);
             size = new Vector3(3f, 1f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(0.33f, 1f, 1f);
@@ -149,7 +161,7 @@ public class smallDoorController : MonoBehaviour {
 
         //If we're ready for a level change
         if (readyForLevelChange == true) {
-            mySpriteRenderer.color = new Color(0, 1, 0);
+            mySpriteRenderer.color = openDoorColor;
         }
 
         //If we get a message from the door that the level is going to change
@@ -160,7 +172,6 @@ public class smallDoorController : MonoBehaviour {
             //destroy ourselves
             Destroy(gameObject);
         }
-        Debug.Log("test" + Time.frameCount);
 	}
 
     private void OnCollisionEnter2D(Collision2D coll)

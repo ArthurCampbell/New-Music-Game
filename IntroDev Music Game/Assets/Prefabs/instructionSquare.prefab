@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50958a1fcb9744a98b6c3922c1e26a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mySound: {fileID: 8300000, guid: 311196da8bb874fee8f691c5fe7a2323, type: 3}
+  mySound: {fileID: 8300000, guid: f9640ce1d54c2494c9534db07ebb98f1, type: 3}
   mySpriteRenderer: {fileID: 0}
   doorScript: {fileID: 0}
   youScript: {fileID: 0}
@@ -219,7 +219,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0bc3e9f55043c49e5a54b59340112b10, type: 3}
-  m_Color: {r: 0.68312067, g: 0.69735336, b: 0.97794116, a: 1}
+  m_Color: {r: 0.3882353, g: 0.6039216, b: 0.5411765, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

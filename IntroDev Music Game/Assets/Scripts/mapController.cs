@@ -6,7 +6,7 @@ public class mapController : MonoBehaviour {
 
     public doorController doorScript;
 
-    public int[,] mapArray = new int[20, 20];
+    public int[,] mapArray = new int[13, 13];
 
     /* I HAVE WRITTEN DOWN THE CURRENT MAP IN A SPREADSHEET
      * REMEMBER TO CHANGE IT WHENEVER YOU CHANGE THE CODE HERE PLEASE */

@@ -267,15 +267,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mySolutionCompleted: 0
-  correctSquare: ffffffffffffffffffffffff
-  correctSquarePlayed: 000000
-  nextSquareInCorrectOrder: -1
+  correctSquare: 060000000700000006000000050000000400000005000000
+  correctSquarePlayed: 000000000000
+  nextSquareInCorrectOrder: 6
   currentCorrectSquareIndex: 0
+  openDoorColor: {r: 0, g: 0, b: 0, a: 0}
+  closedDoorColor: {r: 0, g: 0, b: 0, a: 0}
   doorOpen: {fileID: 8300000, guid: fc7ef323be7e2423d8b8ba03e1ca0898, type: 3}
   doorOpenPlayed: 0
   timeToDoorChange: 0
-  readyForLevelChange: 1
-  myDirection: LEFT
+  readyForLevelChange: 0
+  myDirection: UP
   mySpriteRenderer: {fileID: 0}
   myTextMesh: {fileID: 102646415700597274}
 --- !u!212 &212586673612669912
@@ -313,7 +315,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0bc3e9f55043c49e5a54b59340112b10, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.9882353, g: 0.49803922, b: 0.22745098, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

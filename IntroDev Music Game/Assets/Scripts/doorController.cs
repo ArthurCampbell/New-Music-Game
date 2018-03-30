@@ -13,6 +13,8 @@ public class doorController : MonoBehaviour {
     public bool firstLevelLoad;
     public bool playerMoved;
 
+    public Color openDoorColor;
+    public Color closedDoorColor;
 
     public Vector3 playerMoveTo;
 
@@ -24,6 +26,13 @@ public class doorController : MonoBehaviour {
     public SpriteRenderer mySpriteRenderer;
 
     TextMesh myTextMesh;
+
+    public Color[] CurrentColorPalette;
+    public Color[] ColorPalette1;
+    public Color[] ColorPalette2;
+    public Color[] ColorPalette3;
+    public Color[] ColorPalette4;
+    public Color[] ColorPalette5;
     
     public Transform square;
     public Transform instructionSquare;
@@ -273,9 +282,9 @@ public class doorController : MonoBehaviour {
         if (readyForLevelChange)
         {
             //if we're ready to change colors, open the door
-            mySpriteRenderer.color = new Color(0, 1, 0);
-
-
+            mySpriteRenderer.color = openDoorColor;
+        } else {
+            mySpriteRenderer.color = closedDoorColor;
         }
 
         if (timeForLevelChange)
@@ -398,6 +407,15 @@ public class doorController : MonoBehaviour {
 
         Debug.Log(mapPosition[0] + " " + mapPosition[1]);
         Debug.Log(currentLevel);
+    }
+
+    public void setColorPalette(Color[] colorPaletteToSwitchTo) {
+        //Set Color Palette
+        CurrentColorPalette = colorPaletteToSwitchTo;
+        openDoorColor = CurrentColorPalette[2];
+        closedDoorColor = CurrentColorPalette[3];
+        mainCamera.backgroundColor = CurrentColorPalette[4];
+        fakeRoomCamera.backgroundColor = CurrentColorPalette[4];
     }
 
     public void newLevel()
@@ -528,7 +546,7 @@ public class doorController : MonoBehaviour {
             squaresDestroyed = 0;
             timeForLevelChange = false;
             // or reset our color
-            mySpriteRenderer.color = new Color(0, 1, 0);
+            mySpriteRenderer.color = openDoorColor;
             //If     not,
         } else {
             //We haven't played the level completion sound
@@ -545,7 +563,7 @@ public class doorController : MonoBehaviour {
             squaresDestroyed = 0;
             timeForLevelChange = false;
             //Reset our color
-            mySpriteRenderer.color = new Color(1, 0, 0);
+            mySpriteRenderer.color = closedDoorColor;
         }
 
         playerMoved = false;
@@ -564,6 +582,8 @@ public class doorController : MonoBehaviour {
             Debug.Log("Oops! You're on level 0! Probably should fix that, buddy!");
         }
         if (currentLevel == 1){
+            setColorPalette(ColorPalette1);
+
             //Make the instruction square play the correct sound for the solution
             instructionSquareScript.mySound = level1Solution;
 
@@ -604,6 +624,8 @@ public class doorController : MonoBehaviour {
 
             myDirection = "RIGHT";
         } else if (currentLevel == 2){
+            setColorPalette(ColorPalette2);
+
             instructionSquareScript.mySound = level2Solution;
 
             squareX = squareXPositionSmall;
@@ -687,10 +709,10 @@ public class doorController : MonoBehaviour {
 
             squarePlayed = new bool[squareXPositionMedium.Length];
 
-            makeSmallDoor("UP", levelNullSquareOrder, "", true);
+            makeSmallDoor("RIGHT", levelNullSquareOrder, "", true);
 
 
-            myDirection = "RIGHT";
+            myDirection = "UP";
         } else if (currentLevel == 7)
         {
             instructionSquareScript.mySound = level7Solution;
@@ -909,22 +931,22 @@ public class doorController : MonoBehaviour {
 
         //Move us to the correct location
         if (myDirection == "RIGHT") {
-            pos = new Vector3(6f, 1f, 0f);
+            pos = new Vector3(7.15f, 1f, 0f);
             size = new Vector3(1f, 3f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(1f, 0.33f, 1f);
         } else if (myDirection == "LEFT") {
-            pos = new Vector3(-5f, 1f, 0f);
+            pos = new Vector3(-6.16f, 1f, 0f);
             size = new Vector3(1f, 3f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(1f, 0.33f, 1f);
         } else if (myDirection == "UP") {
-            pos = new Vector3(1f, 4f, 0f);
+            pos = new Vector3(1f, 6f, 0f);
             size = new Vector3(3f, 1f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(0.33f, 1f, 1f);
         } else if (myDirection == "DOWN") {
-            pos = new Vector3(1f, -2f, 0f);
+            pos = new Vector3(1f, -4f, 0f);
             size = new Vector3(3f, 1f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(0.33f, 1f, 1f);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class youController : MonoBehaviour {
 
     public float speed;
-    //bool facingLeft;
+    public float rotZ;
 
     public bool canSwitchCharacters;
 
@@ -46,26 +46,28 @@ public class youController : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 pos.x -= 1f;
-                //facingLeft = true;
+                rotZ = 90;
 
                 switchCharacters();
             }
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 pos.x += 1f;
-                //facingLeft = false;
+                rotZ = -90;
 
                 switchCharacters();
             }
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 pos.y += 1f;
+                rotZ = 0;
 
                 switchCharacters();
             }
             if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
                 pos.y -= 1f;
+                rotZ = 180;
 
                 switchCharacters();
             }
@@ -92,6 +94,13 @@ public class youController : MonoBehaviour {
 
         transform.position = pos;
         drumstick.transform.position = pos;
+
+
+        Quaternion rot = transform.rotation;
+
+        rot = Quaternion.Euler(0f, 0f, rotZ);
+
+        transform.rotation = rot;
 	}
 
     void switchCharacters() {

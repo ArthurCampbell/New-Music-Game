@@ -9,11 +9,13 @@ public class squareController : MonoBehaviour {
     public SpriteRenderer mySpriteRenderer;
     public TextMesh myTextMesh;
 
+    public Color unpressedColor;
     public Color pressedColor;
 
     public int myNumber;
     public doorController doorScript;
     public smallDoorController smallDoorScript;
+    public backdropController backdropScript;
 
     public youController youScript;
 
@@ -26,6 +28,7 @@ public class squareController : MonoBehaviour {
 
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
         youScript = GameObject.FindWithTag("Player").GetComponent<youController>();
+        backdropScript = GameObject.Find("backdrop").GetComponent<backdropController>();
 
         int myDisplayNumber = myNumber + 1;
 
@@ -60,6 +63,7 @@ public class squareController : MonoBehaviour {
             Destroy(gameObject);
         }
 
+        /*
         Color myColor = mySpriteRenderer.color;
         if (myColor != new Color(1, 1, 1)) {
             if (myColor.r < 1f) {
@@ -74,7 +78,10 @@ public class squareController : MonoBehaviour {
                 myColor.b += (1 - myColor.b) * Time.deltaTime * 2;
             }
         }
+        */
+        Color myColor = doorScript.CurrentColorPalette[0];
         mySpriteRenderer.color = myColor;
+
 	}
 
     //If we run into something
@@ -96,8 +103,11 @@ public class squareController : MonoBehaviour {
                 //Record we have been played!
                 doorScript.squarePlayed[myNumber] = true;
 
+                /*
                 //Change our color, because we have been played!
                 mySpriteRenderer.color = pressedColor;
+                */
+
             }
         }
     }

@@ -6,9 +6,14 @@ public class mainCameraController : MonoBehaviour {
 
     public doorController doorScript;
 
+    public Camera me;
+
 	// Use this for initialization
 	void Start () {
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
+
+        me = GetComponent<Camera>();
+        //me.orthographic = false;
 	}
 	
 	// Update is called once per frame
