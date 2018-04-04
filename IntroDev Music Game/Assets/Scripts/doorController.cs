@@ -582,7 +582,7 @@ public class doorController : MonoBehaviour {
             Debug.Log("Oops! You're on level 0! Probably should fix that, buddy!");
         }
         if (currentLevel == 1){
-            setColorPalette(ColorPalette1);
+            setColorPalette(ColorPalette5);
 
             //Make the instruction square play the correct sound for the solution
             instructionSquareScript.mySound = level1Solution;
@@ -624,7 +624,7 @@ public class doorController : MonoBehaviour {
 
             myDirection = "RIGHT";
         } else if (currentLevel == 2){
-            setColorPalette(ColorPalette2);
+            setColorPalette(ColorPalette3);
 
             instructionSquareScript.mySound = level2Solution;
 
@@ -643,6 +643,8 @@ public class doorController : MonoBehaviour {
 
             myDirection = "RIGHT";
         } else if (currentLevel == 3){
+            setColorPalette(ColorPalette4);
+
             instructionSquareScript.mySound = level3Solution;
 
             squareX = squareXPositionMedium;
@@ -660,6 +662,8 @@ public class doorController : MonoBehaviour {
 
             myDirection = "DOWN";
         } else if (currentLevel == 4){
+            setColorPalette(ColorPalette1);
+
             instructionSquareScript.mySound = level4Solution;
 
             squareX = squareXPositionMedium;

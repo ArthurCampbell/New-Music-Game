@@ -6,7 +6,13 @@ public class backgroundObject1Controller : MonoBehaviour {
 
     public Vector3 direction;
     public float speed;
-    public float rotation;
+    public Vector3 rotation;
+
+    public bool backgroundMode;
+
+    public Vector3 scaleVector;
+    public float currentScale;
+    public float startingScale;
 
     //public int[] myLevels;
     public bool dontDestroyUs;
@@ -14,12 +20,15 @@ public class backgroundObject1Controller : MonoBehaviour {
     doorController doorScript;
 
     SpriteRenderer mySpriteRenderer;
+    public GameObject myPattern;
+    SpriteRenderer patternSpriteRenderer;
 
 	// Use this for initialization
 	void Start () {
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
 
         mySpriteRenderer = GetComponent<SpriteRenderer>();
+        patternSpriteRenderer = myPattern.GetComponent<SpriteRenderer>();
 
         dontDestroyUs = true;
 
@@ -30,22 +39,47 @@ public class backgroundObject1Controller : MonoBehaviour {
 	void Update () {
         
         Vector3 pos = transform.position;
-        Quaternion rot = transform.rotation;
 
         pos.x += direction.x * speed * Time.deltaTime;
         pos.y += direction.y * speed * Time.deltaTime;
 
-        if (rotation < 360f) {
-            rotation += 10f * Time.deltaTime;
+        if (backgroundMode) {
+            if (pos.x < 4.5f)
+            {
+                pos.z = 30;
+            } else {
+                pos.z = 23;
+            }
         } else {
-            rotation = 0f;
+            pos.z = 10;
         }
 
-        rot = Quaternion.Euler(0f, rotation, 0f);
-
         transform.position = pos;
-        transform.rotation = rot;
 
+
+        Quaternion rot = transform.rotation;
+
+        rotation = rot.eulerAngles;
+        //if (rotation.y < 360f) {
+        rotation.y += 10f * Time.deltaTime;
+        //} else {
+        //    rotation.y = 0f;
+        //}
+
+        //rot = Quaternion.Euler(rotation);
+
+        transform.rotation = Quaternion.Euler(rotation);
+
+        /*
+         * this was an attempt to make the pattern show up on background circles
+         * it was not really successful
+        if (rot.y > 0) {
+            Vector3 patternPosition = new Vector3(0f, 0f, 0.1f);
+            myPattern.transform.localPosition = patternPosition;
+        } else {
+            Vector3 patternPosition = new Vector3(0f, 0f, -0.1f);
+            myPattern.transform.localPosition = patternPosition;
+        }*/
 
         if (pos.x > 8 || pos.x < -7 || pos.y > 7 || pos.y < -5) {
             reset();
@@ -58,11 +92,73 @@ public class backgroundObject1Controller : MonoBehaviour {
         if (doorScript.readyForCameraSwitch && dontDestroyUs == false) {
             Destroy(gameObject);
         }
+
+        /*
+        scaleVector = transform.localScale;
+        currentScale = scaleVector.x;
+
+        for (int x = 0; x < doorScript.squarePlayed.Length; x++)
+        {
+            if (doorScript.squarePlayed[x])
+            {
+                currentScale += 1;
+            }
+        }
+
+        float scaleDifference = currentScale - startingScale;
+        if (Mathf.Abs(scaleDifference) <= 0.01f) {
+            currentScale = startingScale;
+        } else if (scaleDifference > 0) {
+            currentScale -= scaleDifference * Time.deltaTime;
+        } else if (currentScale < startingScale) {
+            currentScale -= -scaleDifference * Time.deltaTime;
+        }
+
+        Debug.Log(currentScale + " " + startingScale);
+        scaleVector = new Vector3(currentScale, currentScale, 1f);
+        transform.localScale = scaleVector;
+        */
 	}
 
     void reset() {
         direction = new Vector3(0, 0, 5);
 
+        if (backgroundMode)
+        {
+            patternSpriteRenderer.color = new Color(1, 1, 1, 0);
+
+            int colorChoice = Mathf.RoundToInt(Random.Range(0, 3));
+
+            if (colorChoice == 0f) {
+                mySpriteRenderer.color = doorScript.CurrentColorPalette[0];
+            } else if (colorChoice == 1f) {
+                mySpriteRenderer.color = doorScript.CurrentColorPalette[1];
+            } else {
+                Color backgroundColor = doorScript.CurrentColorPalette[1];
+                float ourColorH, ourColorS, ourColorV;
+                Color.RGBToHSV(backgroundColor, out ourColorH, out ourColorS, out ourColorV);
+                Debug.Log(ourColorH + ", " + ourColorS + ", " + ourColorV);
+                ourColorV += .031f;
+                ourColorS -= .004f;
+                Debug.Log(ourColorH + ", " + ourColorS + ", " + ourColorV);
+                Color ourColor = Color.HSVToRGB(ourColorH, ourColorS, ourColorV);
+                mySpriteRenderer.color = ourColor;
+            }
+        }
+        else
+        {
+            Color myColor = doorScript.CurrentColorPalette[1];
+            Color myPatternColor = doorScript.CurrentColorPalette[0];
+
+            myColor.a = 1;
+            myPatternColor.a = 1;
+
+            mySpriteRenderer.color = myColor;
+            patternSpriteRenderer.color = myPatternColor;
+        }
+
+        /*
+         * Old color computation (slightly lighter than background color)
         Color backgroundColor = doorScript.CurrentColorPalette[4];
         float ourColorH, ourColorS, ourColorV;
         Color.RGBToHSV(backgroundColor, out ourColorH, out ourColorS, out ourColorV);
@@ -71,8 +167,9 @@ public class backgroundObject1Controller : MonoBehaviour {
         ourColorS -= .004f;
         Debug.Log(ourColorH + ", " + ourColorS + ", " + ourColorV);
         Color ourColor = Color.HSVToRGB(ourColorH, ourColorS, ourColorV);
-        mySpriteRenderer.color = ourColor;
+        patternSpriteRenderer.color = ourColor;
         Debug.Log(ourColor);
+        */
 
         //Make new position
         int sideToSpawnOn = Mathf.RoundToInt(Random.Range(0, 4));
@@ -100,9 +197,34 @@ public class backgroundObject1Controller : MonoBehaviour {
             direction = new Vector3(Random.Range(-2, 2), 1, 5);
         }
 
+        if (backgroundMode) {
+            x = Random.Range(-6f, 7f);
+            y = Random.Range(-4f, 6f);
+        }
+
         //Go towards the center
         //Randomize that so it's center ish
+
         //Randomize our shape
+        if (backgroundMode)
+        {
+            startingScale = Random.Range(1f, 1.5f);
+            currentScale = startingScale;
+
+            speed = 1;
+        }
+        else
+        {
+            startingScale = Random.Range(0.5f, 1f);
+            currentScale = startingScale;
+
+            speed = 4;
+        }
+
+        Vector3 scale = transform.localScale;
+        scale = new Vector3(currentScale, currentScale, 1f);
+        transform.localScale = scale;
+
         //Randomize our speed
 
         direction = direction.normalized;
@@ -119,9 +241,9 @@ public class backgroundObject1Controller : MonoBehaviour {
 
         float rotY = Random.Range(-180f, 180f);
         Debug.Log("rotY " + rotY);
+        Vector3 newRot = new Vector3(0, rotY, 0);
+        //rot = Quaternion.Euler(newRot);
 
-        rot = Quaternion.Euler(0, rotY, 0);
-
-        transform.rotation = rot;
+        transform.rotation = Quaternion.Euler(newRot);
     }
 }

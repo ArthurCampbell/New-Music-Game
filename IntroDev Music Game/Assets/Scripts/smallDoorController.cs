@@ -34,8 +34,8 @@ public class smallDoorController : MonoBehaviour {
 
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
 
-        openDoorColor = doorScript.openDoorColor;
-        closedDoorColor = doorScript.closedDoorColor;
+        openDoorColor = doorScript.CurrentColorPalette[2];
+        closedDoorColor = doorScript.CurrentColorPalette[3];
 
         mySolutionCompleted = false;
         doorOpenPlayed = false;
@@ -162,6 +162,8 @@ public class smallDoorController : MonoBehaviour {
         //If we're ready for a level change
         if (readyForLevelChange == true) {
             mySpriteRenderer.color = openDoorColor;
+        } else {
+            mySpriteRenderer.color = closedDoorColor;
         }
 
         //If we get a message from the door that the level is going to change

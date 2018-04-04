@@ -12,6 +12,8 @@ public class largeCubeController : MonoBehaviour {
 
     public int levelISpawnedOn;
 
+    public bool dontDestroyUs;
+
     public doorController doorScript;
 	// Use this for initialization
 	void Start () {
@@ -35,7 +37,7 @@ public class largeCubeController : MonoBehaviour {
 
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
 
-        levelISpawnedOn = doorScript.currentLevel;
+        dontDestroyUs = true;
 	}
 	
 	// Update is called once per frame
@@ -48,7 +50,14 @@ public class largeCubeController : MonoBehaviour {
 
         transform.rotation = rot;
 
-        if (doorScript.currentLevel != levelISpawnedOn) {
+
+        if (doorScript.readyForCameraSwitch == false)
+        {
+            dontDestroyUs = false;
+        }
+
+        if (doorScript.readyForCameraSwitch && dontDestroyUs == false)
+        {
             Destroy(gameObject);
         }
 	}

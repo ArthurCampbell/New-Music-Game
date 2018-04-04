@@ -25,7 +25,7 @@ public class progressBarController : MonoBehaviour {
 
 
         //Make the progress bar 8 long
-        transform.localScale = new Vector3(8f, 0.5f, 1f);
+        transform.localScale = new Vector3(8f, 0.4f, 1f);
 
 	}
 	
