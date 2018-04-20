@@ -43,6 +43,9 @@ public class instructionSquareController : MonoBehaviour
                 //Weird audio overlap
                 myAudioSource.Stop();
             }
+            transform.localScale = new Vector3(0.75f, 0.75f, 1f);
+        } else {
+            transform.localScale = new Vector3(0.85f, 0.85f, 1f);
         }
 
         //If we are going to go to the next level, we need to destory ourselves so we can 

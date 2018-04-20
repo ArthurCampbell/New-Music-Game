@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class backgroundController : MonoBehaviour {
 
-    AudioSource myAudioSource;
+    //AudioSource myAudioSource;
     public AudioClip backgroundMusic;
+    public AudioClip backgroundBass;
+    public AudioClip backgroundBassDrum;
+    public AudioClip backgroundSnare;
+    public AudioClip backgroundClick;
 
-    doorController doorScript;
+    AudioSource backgroundBassSource;
+    AudioSource backgroundBassDrumSource;
+    AudioSource backgroundSnareSource;
+    AudioSource backgroundClickSource;
+
+    public doorController doorScript;
 
     public bool backgroundObject1Spawned;
     public bool backgroundSquaresSpawned;
@@ -32,6 +41,7 @@ public class backgroundController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        /*
         //play background music at half volume, looped
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = backgroundMusic;
@@ -40,6 +50,35 @@ public class backgroundController : MonoBehaviour {
 
         //Don't play just yet
         myAudioSource.Play();
+        */
+
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+
+        //play background music at half volume, looped
+        backgroundBassSource = audioSources[0];
+        backgroundBassSource.clip = backgroundBass;
+        backgroundBassSource.loop = true;
+        backgroundBassSource.volume = 0.25f;
+
+        backgroundBassDrumSource = audioSources[1];
+        backgroundBassDrumSource.clip = backgroundBassDrum;
+        backgroundBassDrumSource.loop = true;
+        backgroundBassDrumSource.volume = 0.25f;
+
+        backgroundClickSource = audioSources[2];
+        backgroundClickSource.clip = backgroundClick;
+        backgroundClickSource.loop = true;
+        backgroundClickSource.volume = 0.25f;
+
+        backgroundSnareSource = audioSources[3];
+        backgroundSnareSource.clip = backgroundSnare;
+        backgroundSnareSource.loop = true;
+        backgroundSnareSource.volume = 0.15f;
+
+        //backgroundBassSource.Play();
+        //backgroundSnareSource.Play();
+        //backgroundBassDrumSource.Play();
+        //backgroundClickSource.Play();
 
         //Get door script
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
@@ -64,6 +103,7 @@ public class backgroundController : MonoBehaviour {
                 {
                     spawn(6, 8, 8, true, true, false);
                     backgroundObject1Spawned = true;
+
                 }
             }
             if (doorScript.currentLevel == 2)
@@ -72,6 +112,7 @@ public class backgroundController : MonoBehaviour {
                 {
                     spawn(6, 8, 8, false, true, true);
                     backgroundObject1Spawned = true;
+
                 }
             }
 

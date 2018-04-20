@@ -44,12 +44,9 @@ public class backgroundObject1Controller : MonoBehaviour {
         pos.y += direction.y * speed * Time.deltaTime;
 
         if (backgroundMode) {
-            if (pos.x < 4.5f)
-            {
-                pos.z = 30;
-            } else {
-                pos.z = 23;
-            }
+
+            pos.z = 30;
+
         } else {
             pos.z = 10;
         }
@@ -60,26 +57,10 @@ public class backgroundObject1Controller : MonoBehaviour {
         Quaternion rot = transform.rotation;
 
         rotation = rot.eulerAngles;
-        //if (rotation.y < 360f) {
-        rotation.y += 10f * Time.deltaTime;
-        //} else {
-        //    rotation.y = 0f;
-        //}
 
-        //rot = Quaternion.Euler(rotation);
+        rotation.y += 10f * Time.deltaTime;
 
         transform.rotation = Quaternion.Euler(rotation);
-
-        /*
-         * this was an attempt to make the pattern show up on background circles
-         * it was not really successful
-        if (rot.y > 0) {
-            Vector3 patternPosition = new Vector3(0f, 0f, 0.1f);
-            myPattern.transform.localPosition = patternPosition;
-        } else {
-            Vector3 patternPosition = new Vector3(0f, 0f, -0.1f);
-            myPattern.transform.localPosition = patternPosition;
-        }*/
 
         if (pos.x > 8 || pos.x < -7 || pos.y > 7 || pos.y < -5) {
             reset();
@@ -137,10 +118,10 @@ public class backgroundObject1Controller : MonoBehaviour {
                 Color backgroundColor = doorScript.CurrentColorPalette[1];
                 float ourColorH, ourColorS, ourColorV;
                 Color.RGBToHSV(backgroundColor, out ourColorH, out ourColorS, out ourColorV);
-                Debug.Log(ourColorH + ", " + ourColorS + ", " + ourColorV);
+                //Debug.Log(ourColorH + ", " + ourColorS + ", " + ourColorV);
                 ourColorV += .031f;
                 ourColorS -= .004f;
-                Debug.Log(ourColorH + ", " + ourColorS + ", " + ourColorV);
+                //Debug.Log(ourColorH + ", " + ourColorS + ", " + ourColorV);
                 Color ourColor = Color.HSVToRGB(ourColorH, ourColorS, ourColorV);
                 mySpriteRenderer.color = ourColor;
             }
@@ -240,7 +221,7 @@ public class backgroundObject1Controller : MonoBehaviour {
         Quaternion rot = transform.rotation;
 
         float rotY = Random.Range(-180f, 180f);
-        Debug.Log("rotY " + rotY);
+        //Debug.Log("rotY " + rotY);
         Vector3 newRot = new Vector3(0, rotY, 0);
         //rot = Quaternion.Euler(newRot);
 

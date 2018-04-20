@@ -6,7 +6,7 @@ public class mapController : MonoBehaviour {
 
     public doorController doorScript;
 
-    public int[,] mapArray = new int[13, 13];
+    public int[,] mapArray = new int[10, 10];
 
     /* I HAVE WRITTEN DOWN THE CURRENT MAP IN A SPREADSHEET
      * REMEMBER TO CHANGE IT WHENEVER YOU CHANGE THE CODE HERE PLEASE */
@@ -23,23 +23,23 @@ public class mapController : MonoBehaviour {
         }
 
         //Levels 1-13 in straight line from [0, 9] to [14, 9]
-        for (int x = 0; x < 13; x++){
-            mapArray[x, 9] = x + 1;
+        for (int x = 0; x < 7; x++){
+            mapArray[x, 2] = x + 7;
         }
 
-        mapArray[11, 8] = 16;
-        mapArray[11, 7] = 17;
+        mapArray[5, 1] = 16;
+        mapArray[5, 0] = 17;
 
-        mapArray[11, 10] = 15;
-        mapArray[12, 10] = 14;
+        mapArray[5, 3] = 15;
+        mapArray[6, 3] = 14;
 
-        mapArray[6, 10] = 1;
-        mapArray[7, 10] = 2;
-        mapArray[8, 10] = 3;
+        mapArray[0, 3] = 1;
+        mapArray[1, 3] = 2;
+        mapArray[2, 3] = 3;
 
-        mapArray[6, 11] = 6;
-        mapArray[7, 11] = 5;
-        mapArray[8, 11] = 4;
+        mapArray[0, 4] = 6;
+        mapArray[1, 4] = 5;
+        mapArray[2, 4] = 4;
 
         //Debug.Log(mapArray);
 	}

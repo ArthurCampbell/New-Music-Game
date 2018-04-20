@@ -55,7 +55,7 @@ Transform:
   m_GameObject: {fileID: 1308622892471876}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.1}
-  m_LocalScale: {x: 1.05, y: 1.05, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_Children: []
   m_Father: {fileID: 4788907292861138}
   m_RootOrder: 0
@@ -68,7 +68,7 @@ Transform:
   m_GameObject: {fileID: 1126065084896302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.5822763, y: -1.9610703, z: 0}
-  m_LocalScale: {x: 0.95, y: 0.95, z: 1}
+  m_LocalScale: {x: 0.85, y: 0.85, z: 1}
   m_Children:
   - {fileID: 4375133020048806}
   m_Father: {fileID: 0}
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50958a1fcb9744a98b6c3922c1e26a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mySound: {fileID: 8300000, guid: cebedaafec69346cca5a70cd3086dec2, type: 3}
+  mySound: {fileID: 8300000, guid: f9640ce1d54c2494c9534db07ebb98f1, type: 3}
   mySpriteRenderer: {fileID: 0}
   doorScript: {fileID: 0}
   youScript: {fileID: 0}

@@ -37,10 +37,10 @@ public class backdropController : MonoBehaviour {
         Color backgroundColor = doorScript.CurrentColorPalette[4];
         float ourColorH, ourColorS, ourColorV;
         Color.RGBToHSV(backgroundColor, out ourColorH, out ourColorS, out ourColorV);
-        Debug.Log(ourColorH + ", " + ourColorS + ", " + ourColorV);
+        //Debug.Log(ourColorH + ", " + ourColorS + ", " + ourColorV);
         ourColorV += .031f;
         ourColorS -= .004f;
-        Debug.Log(ourColorH + ", " + ourColorS + ", " + ourColorV);
+        //Debug.Log(ourColorH + ", " + ourColorS + ", " + ourColorV);
         Color ourColor = Color.HSVToRGB(ourColorH, ourColorS, ourColorV);
         mySpriteRenderer.color = ourColor;
 

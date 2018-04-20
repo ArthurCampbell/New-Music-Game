@@ -310,6 +310,7 @@ MonoBehaviour:
   myDirection: UP
   mySpriteRenderer: {fileID: 0}
   myTextMesh: {fileID: 102646415700597274}
+  myOutline: {fileID: 1984916123161030}
 --- !u!212 &212586673612669912
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -85,6 +85,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   speed: 5
   rotation: {x: 0, y: 0, z: 0}
+  backgroundMode: 1
   scaleVector: {x: 0, y: 0, z: 0}
   currentScale: 0
   startingScale: 0

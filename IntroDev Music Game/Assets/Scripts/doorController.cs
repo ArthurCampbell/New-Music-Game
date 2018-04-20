@@ -13,6 +13,10 @@ public class doorController : MonoBehaviour {
     public bool firstLevelLoad;
     public bool playerMoved;
 
+    public int currentBeat;
+    public float beatTimer;
+    public float ourBPM;
+
     public Color openDoorColor;
     public Color closedDoorColor;
 
@@ -26,6 +30,7 @@ public class doorController : MonoBehaviour {
     public SpriteRenderer mySpriteRenderer;
 
     TextMesh myTextMesh;
+    public GameObject myOutline;
 
     public Color[] CurrentColorPalette;
     public Color[] ColorPalette1;
@@ -61,6 +66,10 @@ public class doorController : MonoBehaviour {
     public int squaresDestroyed;
     public float timeToDoorChange;
     public bool[] mainDoorOpened;
+
+
+    //Menu stuff
+    public bool pauseMenu;
 
 
     //HELLO HI IF YOU WANT TO EDIT THE MELODY/SOLUTION ONLY EDIT THE ARRAYS WITH LEVEL[number]
@@ -150,19 +159,22 @@ public class doorController : MonoBehaviour {
     public float[] squareXPositionBig;
     public float[] squareYPositionBig;
 
-
     public int testMapX;
     public int testMapY;
 
 	// Use this for initialization
     void Start () {
+        
+        ourBPM = 90f;
+        beatTimer = ourBPM / 60f;
+        currentBeat = 1;
 
         fakeRoomCamera.aspect = 1.3333f;
 
         //We start on the first level,
         currentLevel = 1;
         //Which is at this position on the map array
-        mapPosition[0] = 6; mapPosition[1] = 10;
+        mapPosition[0] = 0; mapPosition[1] = 3;
 
         doorOpen = musicBits[musicBits.Length - 1];
         myAudioSource = GetComponent<AudioSource>();
@@ -180,189 +192,230 @@ public class doorController : MonoBehaviour {
 
         youScript = GameObject.FindWithTag("Player").GetComponent<youController>();
 
+        pauseMenu = false;
+
         newLevel();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-    
-        /* use this to check positions on the map array
-        if (Input.GetKeyDown(KeyCode.N)) {
-            testMapX--;
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            pauseMenu = !pauseMenu;
         }
-        if (Input.GetKeyDown(KeyCode.M)) {
-            testMapX++;
-        }
-        if (Input.GetKeyDown(KeyCode.H)) {
-            testMapY--;
 
-        }
-        if (Input.GetKeyDown(KeyCode.J)) {
-            testMapY++;
-        } 
-        Debug.Log(testMapX + ", " + testMapY);
-        Debug.Log(mapScript.mapArray[testMapX, testMapY]);
-        */
-
-        //Label us with the current level
-        myTextMesh.text = currentLevel + "";
-
-        //ARE WE PLAYING THE SQUARES IN ORDER????
-
-        //Check all the squares to see if they are being played
-        for (int x = 0; x < squarePlayed.Length; x++)
+        if (pauseMenu)
         {
-            if (squarePlayed[x])
-            {
-                //if they are, check to see if it is the next square in the correct order
-                //If it is,
-                if (x == nextSquareInCorrectOrder)
-                {
-                    //Record we played that square
-                    correctSquarePlayed[currentCorrectSquareIndex] = true;
-                    //If there are still more correct squares to go
-                    if (currentCorrectSquareIndex < correctSquare.Length - 1)
-                    {
-                        //The next correct square is one up in the correct square index
-                        currentCorrectSquareIndex++;
 
-                        //Record what actual number that square is
+        }
+        else
+        {
+
+            if (beatTimer - Time.deltaTime > 0) {
+                beatTimer -= Time.deltaTime;
+            } else {
+                beatTimer = ourBPM / 60f;
+                if (currentBeat < 4)
+                {
+                    currentBeat++;
+                    Debug.Log(currentBeat);
+                }
+                else
+                {
+                    currentBeat = 1;
+                    Debug.Log(currentBeat);
+                }
+            }
+
+
+            /* use this to check positions on the map array
+            if (Input.GetKeyDown(KeyCode.N)) {
+                testMapX--;
+            }
+            if (Input.GetKeyDown(KeyCode.M)) {
+                testMapX++;
+            }
+            if (Input.GetKeyDown(KeyCode.H)) {
+                testMapY--;
+
+            }
+            if (Input.GetKeyDown(KeyCode.J)) {
+                testMapY++;
+            } 
+            Debug.Log(testMapX + ", " + testMapY);
+            Debug.Log(mapScript.mapArray[testMapX, testMapY]);
+            */
+
+            //Label us with the current level
+            myTextMesh.text = currentLevel + "";
+
+            //ARE WE PLAYING THE SQUARES IN ORDER????
+
+            //Check all the squares to see if they are being played
+            for (int x = 0; x < squarePlayed.Length; x++)
+            {
+                if (squarePlayed[x])
+                {
+                    //if they are, check to see if it is the next square in the correct order
+                    //If it is,
+                    if (x == nextSquareInCorrectOrder)
+                    {
+                        //Record we played that square
+                        correctSquarePlayed[currentCorrectSquareIndex] = true;
+                        //If there are still more correct squares to go
+                        if (currentCorrectSquareIndex < correctSquare.Length - 1)
+                        {
+                            //The next correct square is one up in the correct square index
+                            currentCorrectSquareIndex++;
+
+                            //Record what actual number that square is
+                            nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+
+                        }
+                        else
+                        {
+                            //Otherwise, we beat the level! congrats!
+                            levelCompleted = true;
+                        }
+                    }
+                    else
+                    {
+                        //if it isn't, restart the order
+                        for (int n = 0; n < correctSquarePlayed.Length; n++)
+                        {
+                            correctSquarePlayed[n] = false;
+                        }
+                        currentCorrectSquareIndex = 0;
                         nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+                    }
+                }
+            }
 
-                    }
-                    else
-                    {
-                        //Otherwise, we beat the level! congrats!
-                        levelCompleted = true;
-                    }
+
+            ////////////******End of level stuff******////////////
+
+            //if we've completed the level and haven't played the door success noise
+            if (levelCompleted && doorOpenPlayed == false)
+            {
+                //Start playing the door success noise after the last square note has ended
+                myAudioSource.PlayDelayed(musicBits[correctSquare[correctSquare.Length - 2]].length);
+                //Record this (so we don't play the sound every frame
+                doorOpenPlayed = true;
+
+                //Record that we've competed the main door of the level
+                mainDoorOpened[currentLevel] = true;
+            }
+
+            //If we've started playing the success sound
+            if (doorOpenPlayed)
+            {
+                //Count down until both the square note and the door success noise have ended
+                if (timeToDoorChange < myAudioSource.clip.length + musicBits[correctSquare[correctSquare.Length - 2]].length)
+                {
+                    timeToDoorChange += Time.deltaTime;
                 }
                 else
                 {
-                    //if it isn't, restart the order
-                    for (int n = 0; n < correctSquarePlayed.Length; n++)
-                    {
-                        correctSquarePlayed[n] = false;
-                    }
-                    currentCorrectSquareIndex = 0;
-                    nextSquareInCorrectOrder = correctSquare[currentCorrectSquareIndex];
+                    //If we're done, we are ready to change levels
+                    readyForLevelChange = true;
                 }
             }
-        }
 
-
-        ////////////******End of level stuff******////////////
-
-        //if we've completed the level and haven't played the door success noise
-        if (levelCompleted && doorOpenPlayed == false)
-        {
-            //Start playing the door success noise after the last square note has ended
-            myAudioSource.PlayDelayed(musicBits[correctSquare[correctSquare.Length - 2]].length);
-            //Record this (so we don't play the sound every frame
-            doorOpenPlayed = true;
-
-            //Record that we've competed the main door of the level
-            mainDoorOpened[currentLevel] = true;
-        }
-
-        //If we've started playing the success sound
-        if (doorOpenPlayed)
-        {
-            //Count down until both the square note and the door success noise have ended
-            if (timeToDoorChange < myAudioSource.clip.length + musicBits[correctSquare[correctSquare.Length - 2]].length)
+            if (readyForLevelChange)
             {
-                timeToDoorChange += Time.deltaTime;
+                //if we're ready to change colors, open the door
+                mySpriteRenderer.color = openDoorColor;
             }
             else
             {
-                //If we're done, we are ready to change levels
-                readyForLevelChange = true;
+                mySpriteRenderer.color = closedDoorColor;
             }
-        }
 
-        if (readyForLevelChange)
-        {
-            //if we're ready to change colors, open the door
-            mySpriteRenderer.color = openDoorColor;
-        } else {
-            mySpriteRenderer.color = closedDoorColor;
-        }
-
-        if (timeForLevelChange)
-        {
-            if (playerMoved == false)
+            if (timeForLevelChange)
             {
-                Debug.Log("youMoved" + Time.frameCount);
-                youScript.transform.position = new Vector3(20f, 20f, 0.15f);
-                playerMoved = true;
-            }
-            else
-            {
-                //Move the main camera to the fakeRoom
-                if (firstLevelLoad == false)
+                if (playerMoved == false)
                 {
-
-                    firstLevelLoad = true;
+                    Debug.Log("youMoved" + Time.frameCount);
+                    youScript.transform.position = new Vector3(20f, 20f, -0.15f);
+                    playerMoved = true;
                 }
                 else
                 {
-                    if (myDirection == "LEFT")
-                    {
-                        mainCamera.transform.position = new Vector3(13.82f, 1f, -10f);
-                    }
-                    else if (myDirection == "RIGHT")
-                    {
-                        mainCamera.transform.position = new Vector3(-12.835f, 1f, -10f);
-                    }
-                    else if (myDirection == "UP")
-                    {
-                        mainCamera.transform.position = new Vector3(0.5f, -9f, -10f);
-                    }
-                    else if (myDirection == "DOWN")
-                    {
-                        mainCamera.transform.position = new Vector3(0.5f, 11f, -10f);
-                    }
-                }
-                //freeze the fake room camera
-                fakeRoomCamera.targetTexture = nullTexture;
-                Debug.Log("FreezeCamera:" + Time.frameCount);
-                if (goodbyeSquares == false)
-                {
-                    goodbyeSquares = true;
-                }
-                else
-                {
-
-
-                    if (squaresDestroyed >= squarePlayed.Length && numberOfSmallDoors <= 0)
+                    //Move the main camera to the fakeRoom
+                    if (firstLevelLoad == false)
                     {
 
-                        newLevel();
+                        firstLevelLoad = true;
                     }
                     else
                     {
-                        Debug.Log("oops: " + squaresDestroyed + "/" + squarePlayed.Length + ", " + numberOfSmallDoors);
+                        if (myDirection == "LEFT")
+                        {
+                            mainCamera.transform.position = new Vector3(13.82f, 1f, -10f);
+                        }
+                        else if (myDirection == "RIGHT")
+                        {
+                            mainCamera.transform.position = new Vector3(-12.835f, 1f, -10f);
+                        }
+                        else if (myDirection == "UP")
+                        {
+                            mainCamera.transform.position = new Vector3(0.5f, -9f, -10f);
+                        }
+                        else if (myDirection == "DOWN")
+                        {
+                            mainCamera.transform.position = new Vector3(0.5f, 11f, -10f);
+                        }
                     }
+                    //freeze the fake room camera
+                    fakeRoomCamera.targetTexture = nullTexture;
+                    Debug.Log("FreezeCamera:" + Time.frameCount);
+                    if (goodbyeSquares == false)
+                    {
+                        goodbyeSquares = true;
+                    }
+                    else
+                    {
 
+
+                        if (squaresDestroyed >= squarePlayed.Length && numberOfSmallDoors <= 0)
+                        {
+
+                            newLevel();
+                        }
+                        else
+                        {
+                            Debug.Log("oops: " + squaresDestroyed + "/" + squarePlayed.Length + ", " + numberOfSmallDoors);
+                        }
+
+                    }
                 }
             }
-        }
 
-        if (readyForCameraSwitch)
-        {
-            //Debug.Log("readyForCameraSwitch:" + Time.frameCount);
+            if (readyForCameraSwitch)
+            {
+                //Debug.Log("readyForCameraSwitch:" + Time.frameCount);
+            }
         }
 	}
 
     private void OnCollisionEnter2D(Collision2D coll)
     {
-        //If we collide with the player and we are ready for a level change
-        if (coll.gameObject.tag == "Player" && readyForLevelChange){
-            findNextLevel();
+        if (pauseMenu)
+        {
 
-            //Prepare to change to the next level
-            timeForLevelChange = true;
+        }
+        else
+        {
+            //If we collide with the player and we are ready for a level change
+            if (coll.gameObject.tag == "Player" && readyForLevelChange)
+            {
+                findNextLevel();
 
-            Debug.Log("Coll:" + Time.frameCount);
+                //Prepare to change to the next level
+                timeForLevelChange = true;
+
+                Debug.Log("Coll:" + Time.frameCount);
+            }
         }
     }
 
@@ -939,21 +992,25 @@ public class doorController : MonoBehaviour {
             size = new Vector3(1f, 3f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(1f, 0.33f, 1f);
+            myOutline.transform.localScale = new Vector3(1.1f, 1.03f, 1f);
         } else if (myDirection == "LEFT") {
             pos = new Vector3(-6.16f, 1f, 0f);
             size = new Vector3(1f, 3f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(1f, 0.33f, 1f);
+            myOutline.transform.localScale = new Vector3(1.1f, 1.03f, 1f);
         } else if (myDirection == "UP") {
             pos = new Vector3(1f, 6f, 0f);
             size = new Vector3(3f, 1f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(0.33f, 1f, 1f);
+            myOutline.transform.localScale = new Vector3(1.03f, 1.1f, 1f);
         } else if (myDirection == "DOWN") {
             pos = new Vector3(1f, -4f, 0f);
             size = new Vector3(3f, 1f, 1f);
 
             myTextMesh.transform.localScale = new Vector3(0.33f, 1f, 1f);
+            myOutline.transform.localScale = new Vector3(1.03f, 1.1f, 1f);
         }
 
         transform.position = pos;
