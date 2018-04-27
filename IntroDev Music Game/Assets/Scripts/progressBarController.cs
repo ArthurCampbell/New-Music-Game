@@ -6,7 +6,7 @@ public class progressBarController : MonoBehaviour {
 
     //SpriteRenderer mySpriteRenderer;
 
-    doorController doorScript;
+   public doorController doorScript;
 
     SpriteRenderer mySpriteRenderer;
 

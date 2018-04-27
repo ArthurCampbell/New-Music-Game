@@ -22,26 +22,50 @@ public class mapController : MonoBehaviour {
             }
         }
 
+        /*
         //Levels 1-13 in straight line from [0, 9] to [14, 9]
         for (int x = 0; x < 7; x++){
-            mapArray[x, 2] = x + 7;
+            mapArray[x + 1, 2] = x + 7;
         }
+        */
 
-        mapArray[5, 1] = 16;
-        mapArray[5, 0] = 17;
+        /*
+        mapArray[6, 1] = 16;
+        mapArray[6, 0] = 17;
 
-        mapArray[5, 3] = 15;
-        mapArray[6, 3] = 14;
+        mapArray[6, 3] = 15;
+        mapArray[7, 3] = 14;
 
-        mapArray[0, 3] = 1;
-        mapArray[1, 3] = 2;
-        mapArray[2, 3] = 3;
+        mapArray[0, 3] = 21;
+        mapArray[1, 3] = 1;
+        mapArray[2, 3] = 2;
+        mapArray[3, 3] = 3;
 
-        mapArray[0, 4] = 6;
-        mapArray[1, 4] = 5;
-        mapArray[2, 4] = 4;
+        mapArray[1, 4] = 6;
+        mapArray[2, 4] = 5;
+        mapArray[3, 4] = 4;
+        */
 
-        //Debug.Log(mapArray);
+        mapArray[1, 1] = 15;
+        mapArray[1, 2] = 14;
+        mapArray[1, 3] = 10;
+        mapArray[1, 4] = 11;
+        mapArray[1, 5] = 12;
+
+        mapArray[2, 2] = 1;
+        mapArray[2, 3] = 9;
+        mapArray[2, 5] = 13;
+
+        mapArray[3, 2] = 2;
+        mapArray[3, 3] = 8;
+
+        mapArray[4, 2] = 3;
+        mapArray[4, 3] = 4;
+        mapArray[4, 4] = 5;
+
+        mapArray[5, 3] = 7;
+        mapArray[5, 4] = 6;
+
 	}
 	
     public Vector2Int findNextRoom(string directionToGoTo) {

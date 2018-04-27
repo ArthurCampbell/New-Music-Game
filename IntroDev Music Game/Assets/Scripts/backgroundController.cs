@@ -10,11 +10,13 @@ public class backgroundController : MonoBehaviour {
     public AudioClip backgroundBassDrum;
     public AudioClip backgroundSnare;
     public AudioClip backgroundClick;
+    public AudioClip backgroundMelody;
 
     AudioSource backgroundBassSource;
     AudioSource backgroundBassDrumSource;
     AudioSource backgroundSnareSource;
     AudioSource backgroundClickSource;
+    AudioSource backgroundMelodySource;
 
     public doorController doorScript;
 
@@ -31,6 +33,12 @@ public class backgroundController : MonoBehaviour {
     public GameObject backgroundSquare;
     public GameObject backgroundCircle;
     public GameObject largeCube;
+
+    public float bassVolume;
+    public float bassDrumVolume;
+    public float snareVolume;
+    public float clickVolume;
+    public float melodyVolume;
 
     public int[] flatCapsuleLevels;
     public int[] backgroundSquareLevels;
@@ -58,27 +66,43 @@ public class backgroundController : MonoBehaviour {
         backgroundBassSource = audioSources[0];
         backgroundBassSource.clip = backgroundBass;
         backgroundBassSource.loop = true;
-        backgroundBassSource.volume = 0.25f;
+        backgroundBassSource.volume = 0f;
 
         backgroundBassDrumSource = audioSources[1];
         backgroundBassDrumSource.clip = backgroundBassDrum;
         backgroundBassDrumSource.loop = true;
-        backgroundBassDrumSource.volume = 0.25f;
+        backgroundBassDrumSource.volume = 00f;
 
         backgroundClickSource = audioSources[2];
         backgroundClickSource.clip = backgroundClick;
         backgroundClickSource.loop = true;
-        backgroundClickSource.volume = 0.25f;
+        backgroundClickSource.volume = 0f;
 
         backgroundSnareSource = audioSources[3];
         backgroundSnareSource.clip = backgroundSnare;
         backgroundSnareSource.loop = true;
-        backgroundSnareSource.volume = 0.15f;
+        backgroundSnareSource.volume = 0f;
 
-        //backgroundBassSource.Play();
-        //backgroundSnareSource.Play();
-        //backgroundBassDrumSource.Play();
-        //backgroundClickSource.Play();
+        backgroundMelodySource = audioSources[4];
+        backgroundMelodySource.clip = backgroundMelody;
+        backgroundMelodySource.loop = true;
+        backgroundMelodySource.volume = 0f;
+
+        backgroundBassSource.Play();
+        backgroundSnareSource.Play();
+        backgroundBassDrumSource.Play();
+        backgroundClickSource.Play();
+        backgroundMelodySource.Play();
+
+
+        backgroundBassSource.volume = bassVolume;
+        /*
+        backgroundBassSource.volume = bassVolume;
+        backgroundSnareSource.volume = snareVolume;
+        backgroundClickSource.volume = clickVolume;
+        backgroundBassDrumSource.volume = bassDrumVolume;
+        backgroundMelodySource.volume = melodyVolume;
+        */
 
         //Get door script
         doorScript = GameObject.FindWithTag("Door").GetComponent<doorController>();
@@ -101,13 +125,14 @@ public class backgroundController : MonoBehaviour {
             {
                 if (backgroundObject1Spawned == false)
                 {
-                    spawn(6, 8, 8, true, true, false);
+                    spawn(3, 6, 6, true, true, false);
                     backgroundObject1Spawned = true;
 
                 }
             }
             if (doorScript.currentLevel == 2)
             {
+
                 if (backgroundObject1Spawned == false)
                 {
                     spawn(6, 8, 8, false, true, true);
@@ -118,9 +143,11 @@ public class backgroundController : MonoBehaviour {
 
             if (doorScript.currentLevel == 3)
             {
+                backgroundSnareSource.volume = snareVolume;
+
                 if (backgroundObject1Spawned == false)
                 {
-                    spawn(6, 8, 8, false, true, true);
+                    spawn(9, 8, 8, false, true, true);
                     backgroundObject1Spawned = true;
                 }
             }
@@ -128,7 +155,7 @@ public class backgroundController : MonoBehaviour {
             {
                 if (backgroundObject1Spawned == false)
                 {
-                    spawn(6, 8, 8, false, true, true);
+                    spawn(12, 10, 10, false, true, true);
                     backgroundObject1Spawned = true;
                 }
             }
@@ -136,31 +163,102 @@ public class backgroundController : MonoBehaviour {
             {
                 if (backgroundObject1Spawned == false)
                 {
-                    spawn(6, 8, 8, false, true, true);
+                    spawn(10, 8, 8, false, true, true);
                     backgroundObject1Spawned = true;
                 }
             }
             if (doorScript.currentLevel == 6)
             {
+                
+
                 if (backgroundObject1Spawned == false)
                 {
-                    spawn(6, 8, 8, false, true, true);
+                    spawn(8, 10, 8, true, false, true);
                     backgroundObject1Spawned = true;
                 }
             }
             if (doorScript.currentLevel == 7)
             {
+
+                backgroundBassDrumSource.volume = bassDrumVolume;
                 if (backgroundObject1Spawned == false)
                 {
-                    spawn(6, 8, 8, false, true, true);
+                    spawn(6, 12, 6, true, false, true);
                     backgroundObject1Spawned = true;
                 }
             }
             if (doorScript.currentLevel == 8)
             {
+
                 if (backgroundObject1Spawned == false)
                 {
-                    spawn(6, 8, 8, false, true, true);
+                    spawn(12, 12, 8, true, true, false);
+                    backgroundObject1Spawned = true;
+                }
+            }
+            if (doorScript.currentLevel == 9)
+            {
+                if (backgroundObject1Spawned == false)
+                {
+                    spawn(15, 15, 4, true, true, false);
+                    backgroundObject1Spawned = true;
+                }
+            }
+            if (doorScript.currentLevel == 10)
+            {
+                if (backgroundObject1Spawned == false)
+                {
+                    spawn(20, 20, 2, true, true, false);
+                    backgroundObject1Spawned = true;
+                }
+            }
+            if (doorScript.currentLevel == 11)
+            {
+                backgroundClickSource.volume = clickVolume;
+
+                if (backgroundObject1Spawned == false)
+                {
+                    spawn(2, 2, 10, false, false, true);
+                    spawn(20, 20, 2, true, true, false);
+                    backgroundObject1Spawned = true;
+                }
+            }
+            if (doorScript.currentLevel == 12)
+            {
+                if (backgroundObject1Spawned == false)
+                {
+                    spawn(4, 4, 15, false, false, true);
+                    spawn(20, 20, 4, true, true, false);
+                    backgroundObject1Spawned = true;
+                }
+            }
+            if (doorScript.currentLevel == 13)
+            {
+
+                if (backgroundObject1Spawned == false)
+                {
+                    spawn(6, 6, 20, false, false, true);
+                    spawn(20, 20, 6, true, true, false);
+                    backgroundObject1Spawned = true;
+                }
+            }
+            if (doorScript.currentLevel == 14)
+            {
+                backgroundMelodySource.volume = melodyVolume;
+
+                if (backgroundObject1Spawned == false)
+                {
+                    spawn(8, 8, 8, false, false, true);
+                    spawn(25, 25, 25, true, true, false);
+                    backgroundObject1Spawned = true;
+                }
+            }
+            if (doorScript.currentLevel == 15)
+            {
+                if (backgroundObject1Spawned == false)
+                {
+                    spawn(30, 30, 30, true, true, true);
+                    spawn(10, 10, 10, false, false, false); 
                     backgroundObject1Spawned = true;
                 }
             }

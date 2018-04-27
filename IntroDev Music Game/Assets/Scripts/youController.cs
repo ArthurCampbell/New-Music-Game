@@ -166,7 +166,7 @@ public class youController : MonoBehaviour {
                     switchCharacters();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && canSwitchCharacters)
             {
                 drumstick.SetActive(!drumstick.activeSelf);
                 me.SetActive(!me.activeSelf);
@@ -177,14 +177,9 @@ public class youController : MonoBehaviour {
                 canSwitchCharacters = !canSwitchCharacters;
             }
 
-            if (doorScript.currentLevel > 12 && doorScript.currentLevel < 16)
-            {
-                canSwitchCharacters = true;
-            }
-            else
-            {
-                canSwitchCharacters = false;
-            }
+           
+            canSwitchCharacters = false;
+
 
             transform.position = pos;
             drumstick.transform.position = pos;
